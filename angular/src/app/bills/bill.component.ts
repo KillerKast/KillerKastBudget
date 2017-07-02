@@ -1,15 +1,15 @@
 import {Component} from "@angular/core";
-import {Bill} from "./bill.model";
+import {Bill} from "./models/bill.model";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CustomValidators} from "ng2-validation";
 import {ActivatedRoute} from "@angular/router";
-import {MonthlyBill} from "./monthly-bill.model";
-import {YearlyBill} from "./yearly-bill.model";
-import {OneTimeBill} from "./one-time-bill.model";
+import {MonthlyBill} from "./models/monthly-bill.model";
+import {YearlyBill} from "./models/yearly-bill.model";
+import {OneTimeBill} from "./models/one-time-bill.model";
 import {BillService} from "./bill.service";
-import {BillList} from "./bill-list.model";
-import {InterestBaringDebt} from "./interest-baring-debt.model";
-import {NoInterestDebt} from "./no-interest-debt";
+import {BillList} from "./models/bill-list.model";
+import {InterestBaringDebt} from "./models/interest-baring-debt.model";
+import {NoInterestDebt} from "./models/no-interest-debt";
 
 @Component({
   selector: 'budget-bill',

@@ -129,7 +129,34 @@
         <label for="noInterestStartingBalance">Starting Balance</label><br/>
         <input id="noInterestStartingBalance"
                pInputText
-               formControlName="startingBalance"
+               formControlName="noInterestStartingBalance"
+        />
+      </div>
+    </div>
+
+    <div id="paymentPlanItems" *ngIf="billType === 'payment-plan'">
+      <br/>
+      <div class="ui-g-9">
+        <label for="paymentPlanPaymentDate">Payment Date</label><br/>
+        <input id="paymentPlanPaymentDate"
+               pInputText
+               formControlName="paymentPlanPaymentDate"
+        />
+      </div>
+      <br/>
+      <div class="ui-g-9">
+        <label for="paymentPlanStartingBalance">Starting Balance</label><br/>
+        <input id="paymentPlanStartingBalance"
+               pInputText
+               formControlName="paymentPlanStartingBalance"
+        />
+      </div>
+      <br/>
+      <div class="ui-g-9">
+        <label for="paymentPlanLastPaymentDate">Last Payment Date</label><br/>
+        <input id="paymentPlanLastPaymentDate"
+               pInputText
+               formControlName="paymentPlanLastPaymentDate"
         />
       </div>
     </div>

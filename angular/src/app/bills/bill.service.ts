@@ -1,12 +1,12 @@
-import {Bill} from "./bill.model";
+import {Bill} from "./models/bill.model";
 import {Headers, Http, Response} from "@angular/http";
 import 'rxjs/Rx';
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {MonthlyBill} from "./monthly-bill.model";
-import {YearlyBill} from "./yearly-bill.model";
-import {OneTimeBill} from "./one-time-bill.model";
-import {InterestBaringDebt} from "./interest-baring-debt.model";
+import {MonthlyBill} from "./models/monthly-bill.model";
+import {YearlyBill} from "./models/yearly-bill.model";
+import {OneTimeBill} from "./models/one-time-bill.model";
+import {InterestBaringDebt} from "./models/interest-baring-debt.model";
 
 @Injectable()
 export class BillService{

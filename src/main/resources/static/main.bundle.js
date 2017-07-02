@@ -143,15 +143,308 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ "../../../../../src/app/bills/bill-list.model.ts":
+/***/ "../../../../../src/app/bills/bill.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "input{\n  width:100%;\n}\n\nbutton{\n  width:100%;\n}\n\np-calendar{\n  width:100%;\n}\n\np-calendar span{\n  width: 100%;\n}\n\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/bills/bill.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"ui-g-12\">\n  <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"billForm\">\n    <div class=\"ui-g-9\" *ngIf=\"!isNew\">\n      <label for=\"nameDropdown\">Name</label><br>\n      <p-dropdown id=\"nameDropdown\"\n                  [style]=\"{'width':'100%'}\"\n                  [options]=\"bills.options\"\n                  formControlName=\"name\"\n                  (onChange)=\"onBillsChange()\"\n      >\n      </p-dropdown>\n    </div>\n\n    <div class=\"ui-g-9\" *ngIf=\"isNew\">\n      <label for=\"name\">Name</label><br/>\n      <input id=\"name\"\n             pInputText\n             formControlName=\"name\"\n      />\n    </div>\n    <div class=\"ui-g-3\" *ngIf=\"!isNew\">\n      <br>\n      <button pButton type=\"button\" icon=\"fa-plus\" label=\"New\" (click)=\"onNewEditClicked()\"></button>\n    </div>\n    <div class=\"ui-g-3\" *ngIf=\"isNew\">\n      <br>\n      <button pButton type=\"button\" icon=\"fa-edit\" label=\"Pick Current\" (click)=\"onNewEditClicked()\"></button>\n    </div>\n    <br/>\n    <div class=\"ui-g-9\">\n      <label for=\"description\">Description</label><br/>\n      <input id=\"description\"\n             pInputText\n             formControlName=\"description\"\n      />\n    </div>\n    <br/>\n    <div class=\"ui-g-9\">\n      <label for=\"paymentAmount\">Payment Amount</label><br/>\n      <input id=\"paymentAmount\"\n             pInputText\n             formControlName=\"paymentAmount\"\n      />\n    </div>\n\n    <div id=\"monthlyBillItems\" *ngIf=\"billType === 'monthly-bill'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"monthlyPaymentDate\">Payment Date</label><br/>\n        <input id=\"monthlyPaymentDate\"\n               pInputText\n               formControlName=\"paymentDate\"\n        />\n      </div>\n    </div>\n\n    <div id=\"yearlyBillItems\" *ngIf=\"billType === 'yearly-bill'\">\n      <br/>\n      <div class=\"ui-g-4\">\n        <label for=\"paymentMonth\">Payment Month</label><br/>\n        <input id=\"paymentMonth\"\n               pInputText\n               formControlName=\"paymentMonth\"\n        />\n      </div>\n      <div class=\"ui-g-1\">&nbsp;</div>\n      <div class=\"ui-g-4\">\n        <label for=\"paymentDay\">Payment Day</label><br/>\n        <input id=\"paymentDay\"\n               pInputText\n               formControlName=\"paymentDay\"\n        />\n      </div>\n    </div>\n\n    <div id=\"oneTimeBillItems\" *ngIf=\"billType === 'one-time-bill'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"oneTimePaymentDate\">Payment Date</label><br/>\n        <p-calendar id=\"oneTimePaymentDate\"\n                    [monthNavigator]=\"true\"\n                    [yearNavigator]=\"true\"\n                    yearRange=\"2000:2060\"\n                    formControlName=\"oneTimePaymentDate\"\n                    [style]=\"{'width':'100%'}\"\n                    [inputStyle]=\"{'width':'100%'}\"\n        ></p-calendar>\n      </div>\n    </div>\n\n    <div id=\"interestBaringDebtItems\" *ngIf=\"billType === 'interest-baring-debt'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"interestBaringPaymentDate\">Payment Date</label><br/>\n        <input id=\"interestBaringPaymentDate\"\n               pInputText\n               formControlName=\"interestBaringPaymentDate\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"interestBaringStartingBalance\">Starting Balance</label><br/>\n        <input id=\"interestBaringStartingBalance\"\n               pInputText\n               formControlName=\"interestBaringStartingBalance\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"apr\">APR</label><br/>\n        <input id=\"apr\"\n               pInputText\n               formControlName=\"apr\"\n        />\n      </div>\n    </div>\n\n    <div id=\"noInterestDebtItems\" *ngIf=\"billType === 'no-interest-debt'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"noInterestPaymentDate\">Payment Date</label><br/>\n        <input id=\"noInterestPaymentDate\"\n               pInputText\n               formControlName=\"noInterestPaymentDate\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"noInterestStartingBalance\">Starting Balance</label><br/>\n        <input id=\"noInterestStartingBalance\"\n               pInputText\n               formControlName=\"noInterestStartingBalance\"\n        />\n      </div>\n    </div>\n\n    <div id=\"paymentPlanItems\" *ngIf=\"billType === 'payment-plan'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"paymentPlanPaymentDate\">Payment Date</label><br/>\n        <input id=\"paymentPlanPaymentDate\"\n               pInputText\n               formControlName=\"paymentPlanPaymentDate\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"paymentPlanStartingBalance\">Starting Balance</label><br/>\n        <input id=\"paymentPlanStartingBalance\"\n               pInputText\n               formControlName=\"paymentPlanStartingBalance\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"paymentPlanLastPaymentDate\">Last Payment Date</label><br/>\n        <input id=\"paymentPlanLastPaymentDate\"\n               pInputText\n               formControlName=\"paymentPlanLastPaymentDate\"\n        />\n      </div>\n    </div>\n\n\n    <div class=\"ui-g-4\">\n      <button pButton type=\"submit\" label=\"Save\" [disabled]=\"billForm.pristine || billForm.invalid\"></button>\n    </div>\n    <div class=\"ui-g-1\">\n      &nbsp;\n    </div>\n    <div class=\"ui-g-4\">\n      <button type=\"reset\" pButton label=\"Reset\"></button>\n    </div>\n\n  </form>\n\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/bills/bill.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__monthly_bill_model__ = __webpack_require__("../../../../../src/app/bills/monthly-bill.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__yearly_bill_model__ = __webpack_require__("../../../../../src/app/bills/yearly-bill.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__one_time_bill_model__ = __webpack_require__("../../../../../src/app/bills/one-time-bill.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interest_baring_debt_model__ = __webpack_require__("../../../../../src/app/bills/interest-baring-debt.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__no_interest_debt__ = __webpack_require__("../../../../../src/app/bills/no-interest-debt.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_validation__ = __webpack_require__("../../../../ng2-validation/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_validation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ng2_validation__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_monthly_bill_model__ = __webpack_require__("../../../../../src/app/bills/models/monthly-bill.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_yearly_bill_model__ = __webpack_require__("../../../../../src/app/bills/models/yearly-bill.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_one_time_bill_model__ = __webpack_require__("../../../../../src/app/bills/models/one-time-bill.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__bill_service__ = __webpack_require__("../../../../../src/app/bills/bill.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_bill_list_model__ = __webpack_require__("../../../../../src/app/bills/models/bill-list.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__models_interest_baring_debt_model__ = __webpack_require__("../../../../../src/app/bills/models/interest-baring-debt.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_no_interest_debt__ = __webpack_require__("../../../../../src/app/bills/models/no-interest-debt.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BillComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+
+
+var BillComponent = (function () {
+    function BillComponent(route, fb, billService) {
+        this.route = route;
+        this.fb = fb;
+        this.billService = billService;
+        this.isNew = false;
+        this.bills = new __WEBPACK_IMPORTED_MODULE_8__models_bill_list_model__["a" /* BillList */]();
+        this.billType = route.snapshot.params['billType'] || 'monthly-bill';
+        this.setupForm();
+        this.routeListener();
+    }
+    BillComponent.prototype.setupForm = function () {
+        this.buildBaseForm();
+        this.configureBillType();
+    };
+    BillComponent.prototype.buildBaseForm = function () {
+        this.billForm = this.fb.group({
+            name: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required],
+            description: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required]],
+            paymentAmount: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2_ng2_validation__["CustomValidators"].number]],
+        });
+    };
+    BillComponent.prototype.configureBillType = function () {
+        this.deleteFormControls();
+        switch (this.billType) {
+            case 'monthly-bill':
+                this.bill = new __WEBPACK_IMPORTED_MODULE_4__models_monthly_bill_model__["a" /* MonthlyBill */]();
+                this.billForm.addControl('paymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                break;
+            case 'yearly-bill':
+                this.bill = new __WEBPACK_IMPORTED_MODULE_5__models_yearly_bill_model__["a" /* YearlyBill */]();
+                this.billForm.addControl('paymentDay', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDay, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('paymentMonth', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentMonth, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                break;
+            case 'one-time-bill':
+                this.bill = new __WEBPACK_IMPORTED_MODULE_6__models_one_time_bill_model__["a" /* OneTimeBill */]();
+                this.billForm.addControl('oneTimePaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.oneTimePaymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                break;
+            case 'interest-baring-debt':
+                this.bill = new __WEBPACK_IMPORTED_MODULE_9__models_interest_baring_debt_model__["a" /* InterestBaringDebt */]();
+                this.billForm.addControl('interestBaringPaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('interestBaringStartingBalance', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.startingBalance, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('apr', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.apr, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+            case 'no-interest-debt':
+                this.bill = new __WEBPACK_IMPORTED_MODULE_10__models_no_interest_debt__["a" /* NoInterestDebt */]();
+                this.billForm.addControl('noInterestPaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('noInterestStartingBalance', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.startingBalance, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+            default:
+                break;
+        }
+    };
+    BillComponent.prototype.deleteFormControls = function () {
+        if (this.billForm.contains('paymentMonth')) {
+            this.billForm.removeControl('paymentMonth');
+        }
+        if (this.billForm.contains('paymentDay')) {
+            this.billForm.removeControl('paymentDay');
+        }
+        if (this.billForm.contains('oneTimePaymentDate')) {
+            this.billForm.removeControl('oneTimePaymentDate');
+        }
+        if (this.billForm.contains('paymentDate')) {
+            this.billForm.removeControl('paymentDate');
+        }
+        if (this.billForm.contains('interestBaringPaymentDate')) {
+            this.billForm.removeControl('interestBaringPaymentDate');
+        }
+        if (this.billForm.contains('apr')) {
+            this.billForm.removeControl('apr');
+        }
+        if (this.billForm.contains('interestBaringStartingBalance')) {
+            this.billForm.removeControl('interestBaringStartingBalance');
+        }
+    };
+    BillComponent.prototype.routeListener = function () {
+        var _this = this;
+        this.route.params.subscribe(function (params) {
+            _this.billType = params['billType'];
+            _this.setupForm();
+            _this.getBills();
+        });
+    };
+    ;
+    BillComponent.prototype.getBills = function () {
+        var _this = this;
+        this.billService.readBills(this.billType).subscribe(function (data) {
+            _this.bills = new __WEBPACK_IMPORTED_MODULE_8__models_bill_list_model__["a" /* BillList */](_this.billType, data);
+            _this.configureBillType();
+        }, function (error) {
+            console.log("failure");
+            console.log(error);
+        });
+    };
+    BillComponent.prototype.onNewEditClicked = function () {
+        this.isNew = !this.isNew;
+        this.billForm.reset();
+        if (!this.isNew) {
+            this.onBillsChange();
+        }
+    };
+    BillComponent.prototype.onSubmit = function () {
+        var savingBill = this.billForm.value;
+        if (!this.isNew) {
+            savingBill.id = this.bills.getSingleBill(savingBill.name).id;
+            savingBill.name = this.bills.getSingleBill(savingBill.name).name;
+        }
+        this.bill.updateBill(savingBill);
+        if (this.isNew) {
+            this.billService.createBill(this.billType, this.bill).subscribe(function (data) { return console.log(data); }, function (error) { return console.error(error); });
+        }
+        else if (!this.isNew) {
+            this.billService.updateBill(this.billType, this.bill).subscribe(function (data) { return console.log(data); }, function (error) { return console.error(error); });
+            console.log(this.bill);
+        }
+        // this.bill.updateBill(this.billForm.value);
+    };
+    BillComponent.prototype.onBillsChange = function () {
+        var id = this.billForm.value.name || 0;
+        this.bill = this.bills.getSingleBill(id);
+        this.billForm.controls['description'].patchValue(this.bill.description);
+        this.billForm.controls['paymentAmount'].patchValue(this.bill.paymentAmount);
+        if (this.billType === 'monthly-bill') {
+            this.billForm.controls['paymentDate'].patchValue(this.bill.paymentDate);
+        }
+        if (this.billType === 'yearly-bill') {
+            this.billForm.controls['paymentDay'].patchValue(this.bill.paymentDay);
+            this.billForm.controls['paymentMonth'].patchValue(this.bill.paymentMonth);
+        }
+        if (this.billType === 'one-time-bill') {
+            this.billForm.controls['oneTimePaymentDate'].patchValue(this.bill.oneTimePaymentDate);
+        }
+        if (this.billType === 'interest-baring-debt') {
+            this.billForm.controls['interestBaringPaymentDate'].patchValue(this.bill.paymentDate);
+            this.billForm.controls['startingBalance'].patchValue(this.bill.startingBalance);
+            this.billForm.controls['apr'].patchValue(this.bill.apr);
+        }
+        this.billForm.markAsPristine();
+    };
+    return BillComponent;
+}());
+BillComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'budget-bill',
+        template: __webpack_require__("../../../../../src/app/bills/bill.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/bills/bill.component.css")],
+        providers: [__WEBPACK_IMPORTED_MODULE_7__bill_service__["a" /* BillService */]]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["ActivatedRoute"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormBuilder"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormBuilder"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_7__bill_service__["a" /* BillService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__bill_service__["a" /* BillService */]) === "function" && _c || Object])
+], BillComponent);
+
+var _a, _b, _c;
+//# sourceMappingURL=bill.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/bills/bill.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__ = __webpack_require__("../../../../rxjs/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BillService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var BillService = (function () {
+    function BillService(http) {
+        this.http = http;
+        this.apiUrl = 'http://localhost:8080/api/bill';
+    }
+    BillService.prototype.createBill = function (billType, bill) {
+        var body = this.getBody(billType, bill);
+        var headers = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
+        return this.http.post(this.apiUrl + '/create/' + billType, body, { headers: headers })
+            .map(function (response) { return response.json(); })
+            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["Observable"].throw(error.json()); });
+    };
+    BillService.prototype.readBills = function (billType) {
+        return this.http.get(this.apiUrl + '/readAll/' + billType)
+            .map(function (response) { return response.json(); })
+            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["Observable"].throw(error.json()); });
+    };
+    BillService.prototype.updateBill = function (billType, bill) {
+        var body = this.getBody(billType, bill);
+        var headers = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
+        return this.http.patch(this.apiUrl + '/update/' + billType, body, { headers: headers })
+            .map(function (response) { return response.json(); })
+            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["Observable"].throw(error.json()); });
+    };
+    BillService.prototype.getBody = function (billType, bill) {
+        var body;
+        if (billType == 'monthly-bill') {
+            body = JSON.stringify(bill.getBill());
+        }
+        else if (billType == 'yearly-bill') {
+            body = JSON.stringify(bill.getBill());
+        }
+        else if (billType == 'one-time-bill') {
+            body = JSON.stringify(bill.getBill());
+        }
+        else if (billType == 'interest-baring-debt') {
+            body = JSON.stringify(bill.getBill());
+        }
+        return body;
+    };
+    return BillService;
+}());
+BillService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_http__["c" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_http__["c" /* Http */]) === "function" && _a || Object])
+], BillService);
+
+var _a;
+//# sourceMappingURL=bill.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/bills/models/bill-list.model.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__monthly_bill_model__ = __webpack_require__("../../../../../src/app/bills/models/monthly-bill.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__yearly_bill_model__ = __webpack_require__("../../../../../src/app/bills/models/yearly-bill.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__one_time_bill_model__ = __webpack_require__("../../../../../src/app/bills/models/one-time-bill.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interest_baring_debt_model__ = __webpack_require__("../../../../../src/app/bills/models/interest-baring-debt.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__no_interest_debt__ = __webpack_require__("../../../../../src/app/bills/models/no-interest-debt.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BillList; });
 
 
@@ -229,224 +522,7 @@ var BillList = (function () {
 
 /***/ }),
 
-/***/ "../../../../../src/app/bills/bill.component.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "input{\n  width:100%;\n}\n\nbutton{\n  width:100%;\n}\n\np-calendar{\n  width:100%;\n}\n\np-calendar span{\n  width: 100%;\n}\n\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/bills/bill.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"ui-g-12\">\n  <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"billForm\">\n    <div class=\"ui-g-9\" *ngIf=\"!isNew\">\n      <label for=\"nameDropdown\">Name</label><br>\n      <p-dropdown id=\"nameDropdown\"\n                  [style]=\"{'width':'100%'}\"\n                  [options]=\"bills.options\"\n                  formControlName=\"name\"\n                  (onChange)=\"onBillsChange()\"\n      >\n      </p-dropdown>\n    </div>\n\n    <div class=\"ui-g-9\" *ngIf=\"isNew\">\n      <label for=\"name\">Name</label><br/>\n      <input id=\"name\"\n             pInputText\n             formControlName=\"name\"\n      />\n    </div>\n    <div class=\"ui-g-3\" *ngIf=\"!isNew\">\n      <br>\n      <button pButton type=\"button\" icon=\"fa-plus\" label=\"New\" (click)=\"onNewEditClicked()\"></button>\n    </div>\n    <div class=\"ui-g-3\" *ngIf=\"isNew\">\n      <br>\n      <button pButton type=\"button\" icon=\"fa-edit\" label=\"Pick Current\" (click)=\"onNewEditClicked()\"></button>\n    </div>\n    <br/>\n    <div class=\"ui-g-9\">\n      <label for=\"description\">Description</label><br/>\n      <input id=\"description\"\n             pInputText\n             formControlName=\"description\"\n      />\n    </div>\n    <br/>\n    <div class=\"ui-g-9\">\n      <label for=\"paymentAmount\">Payment Amount</label><br/>\n      <input id=\"paymentAmount\"\n             pInputText\n             formControlName=\"paymentAmount\"\n      />\n    </div>\n\n    <div id=\"monthlyBillItems\" *ngIf=\"billType === 'monthly-bill'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"monthlyPaymentDate\">Payment Date</label><br/>\n        <input id=\"monthlyPaymentDate\"\n               pInputText\n               formControlName=\"paymentDate\"\n        />\n      </div>\n    </div>\n\n    <div id=\"yearlyBillItems\" *ngIf=\"billType === 'yearly-bill'\">\n      <br/>\n      <div class=\"ui-g-4\">\n        <label for=\"paymentMonth\">Payment Month</label><br/>\n        <input id=\"paymentMonth\"\n               pInputText\n               formControlName=\"paymentMonth\"\n        />\n      </div>\n      <div class=\"ui-g-1\">&nbsp;</div>\n      <div class=\"ui-g-4\">\n        <label for=\"paymentDay\">Payment Day</label><br/>\n        <input id=\"paymentDay\"\n               pInputText\n               formControlName=\"paymentDay\"\n        />\n      </div>\n    </div>\n\n    <div id=\"oneTimeBillItems\" *ngIf=\"billType === 'one-time-bill'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"oneTimePaymentDate\">Payment Date</label><br/>\n        <p-calendar id=\"oneTimePaymentDate\"\n                    [monthNavigator]=\"true\"\n                    [yearNavigator]=\"true\"\n                    yearRange=\"2000:2060\"\n                    formControlName=\"oneTimePaymentDate\"\n                    [style]=\"{'width':'100%'}\"\n                    [inputStyle]=\"{'width':'100%'}\"\n        ></p-calendar>\n      </div>\n    </div>\n\n    <div id=\"interestBaringDebtItems\" *ngIf=\"billType === 'interest-baring-debt'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"interestBaringPaymentDate\">Payment Date</label><br/>\n        <input id=\"interestBaringPaymentDate\"\n               pInputText\n               formControlName=\"interestBaringPaymentDate\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"interestBaringStartingBalance\">Starting Balance</label><br/>\n        <input id=\"interestBaringStartingBalance\"\n               pInputText\n               formControlName=\"interestBaringStartingBalance\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"apr\">APR</label><br/>\n        <input id=\"apr\"\n               pInputText\n               formControlName=\"apr\"\n        />\n      </div>\n    </div>\n\n    <div id=\"noInterestDebtItems\" *ngIf=\"billType === 'no-interest-debt'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"noInterestPaymentDate\">Payment Date</label><br/>\n        <input id=\"noInterestPaymentDate\"\n               pInputText\n               formControlName=\"noInterestPaymentDate\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"noInterestStartingBalance\">Starting Balance</label><br/>\n        <input id=\"noInterestStartingBalance\"\n               pInputText\n               formControlName=\"startingBalance\"\n        />\n      </div>\n    </div>\n\n\n    <div class=\"ui-g-4\">\n      <button pButton type=\"submit\" label=\"Save\" [disabled]=\"billForm.pristine || billForm.invalid\"></button>\n    </div>\n    <div class=\"ui-g-1\">\n      &nbsp;\n    </div>\n    <div class=\"ui-g-4\">\n      <button type=\"reset\" pButton label=\"Reset\"></button>\n    </div>\n\n  </form>\n\n</div>\n"
-
-/***/ }),
-
-/***/ "../../../../../src/app/bills/bill.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_validation__ = __webpack_require__("../../../../ng2-validation/dist/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ng2_validation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ng2_validation__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__monthly_bill_model__ = __webpack_require__("../../../../../src/app/bills/monthly-bill.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__yearly_bill_model__ = __webpack_require__("../../../../../src/app/bills/yearly-bill.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__one_time_bill_model__ = __webpack_require__("../../../../../src/app/bills/one-time-bill.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__bill_service__ = __webpack_require__("../../../../../src/app/bills/bill.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__bill_list_model__ = __webpack_require__("../../../../../src/app/bills/bill-list.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__interest_baring_debt_model__ = __webpack_require__("../../../../../src/app/bills/interest-baring-debt.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__no_interest_debt__ = __webpack_require__("../../../../../src/app/bills/no-interest-debt.ts");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BillComponent; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-
-
-
-var BillComponent = (function () {
-    function BillComponent(route, fb, billService) {
-        this.route = route;
-        this.fb = fb;
-        this.billService = billService;
-        this.isNew = false;
-        this.bills = new __WEBPACK_IMPORTED_MODULE_8__bill_list_model__["a" /* BillList */]();
-        this.billType = route.snapshot.params['billType'] || 'monthly-bill';
-        this.setupForm();
-        this.routeListener();
-    }
-    BillComponent.prototype.setupForm = function () {
-        this.buildBaseForm();
-        this.configureBillType();
-    };
-    BillComponent.prototype.buildBaseForm = function () {
-        this.billForm = this.fb.group({
-            name: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required],
-            description: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required]],
-            paymentAmount: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2_ng2_validation__["CustomValidators"].number]],
-        });
-    };
-    BillComponent.prototype.configureBillType = function () {
-        this.deleteFormControls();
-        switch (this.billType) {
-            case 'monthly-bill':
-                this.bill = new __WEBPACK_IMPORTED_MODULE_4__monthly_bill_model__["a" /* MonthlyBill */]();
-                this.billForm.addControl('paymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-                break;
-            case 'yearly-bill':
-                this.bill = new __WEBPACK_IMPORTED_MODULE_5__yearly_bill_model__["a" /* YearlyBill */]();
-                this.billForm.addControl('paymentDay', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDay, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-                this.billForm.addControl('paymentMonth', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentMonth, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-                break;
-            case 'one-time-bill':
-                this.bill = new __WEBPACK_IMPORTED_MODULE_6__one_time_bill_model__["a" /* OneTimeBill */]();
-                this.billForm.addControl('oneTimePaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.oneTimePaymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-                break;
-            case 'interest-baring-debt':
-                this.bill = new __WEBPACK_IMPORTED_MODULE_9__interest_baring_debt_model__["a" /* InterestBaringDebt */]();
-                this.billForm.addControl('interestBaringPaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-                this.billForm.addControl('interestBaringStartingBalance', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.startingBalance, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-                this.billForm.addControl('apr', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.apr, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-            case 'no-interest-debt':
-                this.bill = new __WEBPACK_IMPORTED_MODULE_10__no_interest_debt__["a" /* NoInterestDebt */]();
-                this.billForm.addControl('noInterestPaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-                this.billForm.addControl('noInterestStartingBalance', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.startingBalance, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-            default:
-                break;
-        }
-    };
-    BillComponent.prototype.deleteFormControls = function () {
-        if (this.billForm.contains('paymentMonth')) {
-            this.billForm.removeControl('paymentMonth');
-        }
-        if (this.billForm.contains('paymentDay')) {
-            this.billForm.removeControl('paymentDay');
-        }
-        if (this.billForm.contains('oneTimePaymentDate')) {
-            this.billForm.removeControl('oneTimePaymentDate');
-        }
-        if (this.billForm.contains('paymentDate')) {
-            this.billForm.removeControl('paymentDate');
-        }
-        if (this.billForm.contains('interestBaringPaymentDate')) {
-            this.billForm.removeControl('interestBaringPaymentDate');
-        }
-        if (this.billForm.contains('apr')) {
-            this.billForm.removeControl('apr');
-        }
-        if (this.billForm.contains('interestBaringStartingBalance')) {
-            this.billForm.removeControl('interestBaringStartingBalance');
-        }
-    };
-    BillComponent.prototype.routeListener = function () {
-        var _this = this;
-        this.route.params.subscribe(function (params) {
-            _this.billType = params['billType'];
-            _this.setupForm();
-            _this.getBills();
-        });
-    };
-    ;
-    BillComponent.prototype.getBills = function () {
-        var _this = this;
-        this.billService.readBills(this.billType).subscribe(function (data) {
-            _this.bills = new __WEBPACK_IMPORTED_MODULE_8__bill_list_model__["a" /* BillList */](_this.billType, data);
-            _this.configureBillType();
-        }, function (error) {
-            console.log("failure");
-            console.log(error);
-        });
-    };
-    BillComponent.prototype.onNewEditClicked = function () {
-        this.isNew = !this.isNew;
-        this.billForm.reset();
-        if (!this.isNew) {
-            this.onBillsChange();
-        }
-    };
-    BillComponent.prototype.onSubmit = function () {
-        var savingBill = this.billForm.value;
-        if (!this.isNew) {
-            savingBill.id = this.bills.getSingleBill(savingBill.name).id;
-            savingBill.name = this.bills.getSingleBill(savingBill.name).name;
-        }
-        this.bill.updateBill(savingBill);
-        if (this.isNew) {
-            this.billService.createBill(this.billType, this.bill).subscribe(function (data) { return console.log(data); }, function (error) { return console.error(error); });
-        }
-        else if (!this.isNew) {
-            this.billService.updateBill(this.billType, this.bill).subscribe(function (data) { return console.log(data); }, function (error) { return console.error(error); });
-            console.log(this.bill);
-        }
-        // this.bill.updateBill(this.billForm.value);
-    };
-    BillComponent.prototype.onBillsChange = function () {
-        var id = this.billForm.value.name || 0;
-        this.bill = this.bills.getSingleBill(id);
-        this.billForm.controls['description'].patchValue(this.bill.description);
-        this.billForm.controls['paymentAmount'].patchValue(this.bill.paymentAmount);
-        if (this.billType === 'monthly-bill') {
-            this.billForm.controls['paymentDate'].patchValue(this.bill.paymentDate);
-        }
-        if (this.billType === 'yearly-bill') {
-            this.billForm.controls['paymentDay'].patchValue(this.bill.paymentDay);
-            this.billForm.controls['paymentMonth'].patchValue(this.bill.paymentMonth);
-        }
-        if (this.billType === 'one-time-bill') {
-            this.billForm.controls['oneTimePaymentDate'].patchValue(this.bill.oneTimePaymentDate);
-        }
-        if (this.billType === 'interest-baring-debt') {
-            this.billForm.controls['interestBaringPaymentDate'].patchValue(this.bill.paymentDate);
-            this.billForm.controls['startingBalance'].patchValue(this.bill.startingBalance);
-            this.billForm.controls['apr'].patchValue(this.bill.apr);
-        }
-        this.billForm.markAsPristine();
-    };
-    return BillComponent;
-}());
-BillComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'budget-bill',
-        template: __webpack_require__("../../../../../src/app/bills/bill.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/bills/bill.component.css")],
-        providers: [__WEBPACK_IMPORTED_MODULE_7__bill_service__["a" /* BillService */]]
-    }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["ActivatedRoute"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["ActivatedRoute"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormBuilder"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormBuilder"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_7__bill_service__["a" /* BillService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__bill_service__["a" /* BillService */]) === "function" && _c || Object])
-], BillComponent);
-
-var _a, _b, _c;
-//# sourceMappingURL=bill.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/bills/bill.model.ts":
+/***/ "../../../../../src/app/bills/models/bill.model.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -538,87 +614,11 @@ var Bill = (function () {
 
 /***/ }),
 
-/***/ "../../../../../src/app/bills/bill.service.ts":
+/***/ "../../../../../src/app/bills/models/interest-baring-debt.model.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__ = __webpack_require__("../../../../rxjs/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BillService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var BillService = (function () {
-    function BillService(http) {
-        this.http = http;
-        this.apiUrl = 'http://localhost:8080/api/bill';
-    }
-    BillService.prototype.createBill = function (billType, bill) {
-        var body = this.getBody(billType, bill);
-        var headers = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
-        return this.http.post(this.apiUrl + '/create/' + billType, body, { headers: headers })
-            .map(function (response) { return response.json(); })
-            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["Observable"].throw(error.json()); });
-    };
-    BillService.prototype.readBills = function (billType) {
-        return this.http.get(this.apiUrl + '/readAll/' + billType)
-            .map(function (response) { return response.json(); })
-            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["Observable"].throw(error.json()); });
-    };
-    BillService.prototype.updateBill = function (billType, bill) {
-        var body = this.getBody(billType, bill);
-        var headers = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
-        return this.http.patch(this.apiUrl + '/update/' + billType, body, { headers: headers })
-            .map(function (response) { return response.json(); })
-            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["Observable"].throw(error.json()); });
-    };
-    BillService.prototype.getBody = function (billType, bill) {
-        var body;
-        if (billType == 'monthly-bill') {
-            body = JSON.stringify(bill.getBill());
-        }
-        else if (billType == 'yearly-bill') {
-            body = JSON.stringify(bill.getBill());
-        }
-        else if (billType == 'one-time-bill') {
-            body = JSON.stringify(bill.getBill());
-        }
-        else if (billType == 'interest-baring-debt') {
-            body = JSON.stringify(bill.getBill());
-        }
-        return body;
-    };
-    return BillService;
-}());
-BillService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_http__["c" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_http__["c" /* Http */]) === "function" && _a || Object])
-], BillService);
-
-var _a;
-//# sourceMappingURL=bill.service.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/bills/interest-baring-debt.model.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bill_model__ = __webpack_require__("../../../../../src/app/bills/bill.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bill_model__ = __webpack_require__("../../../../../src/app/bills/models/bill.model.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InterestBaringDebt; });
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -693,11 +693,11 @@ var InterestBaringDebt = (function (_super) {
 
 /***/ }),
 
-/***/ "../../../../../src/app/bills/monthly-bill.model.ts":
+/***/ "../../../../../src/app/bills/models/monthly-bill.model.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bill_model__ = __webpack_require__("../../../../../src/app/bills/bill.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bill_model__ = __webpack_require__("../../../../../src/app/bills/models/bill.model.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MonthlyBill; });
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -743,11 +743,11 @@ var MonthlyBill = (function (_super) {
 
 /***/ }),
 
-/***/ "../../../../../src/app/bills/no-interest-debt.ts":
+/***/ "../../../../../src/app/bills/models/no-interest-debt.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bill_model__ = __webpack_require__("../../../../../src/app/bills/bill.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bill_model__ = __webpack_require__("../../../../../src/app/bills/models/bill.model.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NoInterestDebt; });
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -809,11 +809,11 @@ var NoInterestDebt = (function (_super) {
 
 /***/ }),
 
-/***/ "../../../../../src/app/bills/one-time-bill.model.ts":
+/***/ "../../../../../src/app/bills/models/one-time-bill.model.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bill_model__ = __webpack_require__("../../../../../src/app/bills/bill.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bill_model__ = __webpack_require__("../../../../../src/app/bills/models/bill.model.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OneTimeBill; });
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -862,11 +862,11 @@ var OneTimeBill = (function (_super) {
 
 /***/ }),
 
-/***/ "../../../../../src/app/bills/yearly-bill.model.ts":
+/***/ "../../../../../src/app/bills/models/yearly-bill.model.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bill_model__ = __webpack_require__("../../../../../src/app/bills/bill.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bill_model__ = __webpack_require__("../../../../../src/app/bills/models/bill.model.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YearlyBill; });
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
