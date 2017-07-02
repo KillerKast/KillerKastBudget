@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+html, body, .page{
+  width:100%;
+  height: 100%;
+}
+
+.header{
+  height:10%;
+  min-height:100px;
+  margin-top: 10px;
+  margin-botton: 5px;
+  margin-left:10px;
+  margin-right:10px;
+}
+
+.middle{
+  height:90%;
+}
+
+.footer{
+  height:5%;
+}
