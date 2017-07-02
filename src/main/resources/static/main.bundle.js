@@ -151,7 +151,9 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__yearly_bill_model__ = __webpack_require__("../../../../../src/app/bills/yearly-bill.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__one_time_bill_model__ = __webpack_require__("../../../../../src/app/bills/one-time-bill.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interest_baring_debt_model__ = __webpack_require__("../../../../../src/app/bills/interest-baring-debt.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__no_interest_debt__ = __webpack_require__("../../../../../src/app/bills/no-interest-debt.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BillList; });
+
 
 
 
@@ -182,6 +184,9 @@ var BillList = (function () {
             else if (billType === 'interest-baring-debt') {
                 tempBill = new __WEBPACK_IMPORTED_MODULE_3__interest_baring_debt_model__["a" /* InterestBaringDebt */](billEntry[bill]._id, billEntry[bill].name, billEntry[bill].description, billEntry[bill].paymentAmount, billEntry[bill].paymentDate, billEntry[bill].startingBalance, billEntry[bill].apr);
             }
+            else if (billType === 'no-interest-debt') {
+                tempBill = new __WEBPACK_IMPORTED_MODULE_4__no_interest_debt__["a" /* NoInterestDebt */](billEntry[bill]._id, billEntry[bill].name, billEntry[bill].description, billEntry[bill].paymentAmount, billEntry[bill].paymentDate, billEntry[bill].startingBalance);
+            }
             this.bills.push(tempBill || null);
             this.billOptions.push({ label: tempBill.name, value: bill });
         }
@@ -204,6 +209,12 @@ var BillList = (function () {
             }
             if (this.billType === 'one-time-bill') {
                 bill = new __WEBPACK_IMPORTED_MODULE_2__one_time_bill_model__["a" /* OneTimeBill */]();
+            }
+            if (this.billType === 'interest-baring-debt') {
+                bill = new __WEBPACK_IMPORTED_MODULE_3__interest_baring_debt_model__["a" /* InterestBaringDebt */]();
+            }
+            if (this.billType === 'no-interest-debt') {
+                bill = new __WEBPACK_IMPORTED_MODULE_4__no_interest_debt__["a" /* NoInterestDebt */]();
             }
         }
         else {
@@ -239,7 +250,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/bills/bill.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ui-g-12\">\n  <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"billForm\">\n    <div class=\"ui-g-9\" *ngIf=\"!isNew\">\n      <label for=\"nameDropdown\">Name</label><br>\n      <p-dropdown id=\"nameDropdown\"\n                  [style]=\"{'width':'100%'}\"\n                  [options]=\"bills.options\"\n                  formControlName=\"name\"\n                  (onChange)=\"onBillsChange()\"\n      >\n      </p-dropdown>\n    </div>\n\n    <div class=\"ui-g-9\" *ngIf=\"isNew\">\n      <label for=\"name\">Name</label><br/>\n      <input id=\"name\"\n             pInputText\n             formControlName=\"name\"\n      />\n    </div>\n    <div class=\"ui-g-3\" *ngIf=\"!isNew\">\n      <br>\n      <button pButton type=\"button\" icon=\"fa-plus\" label=\"New\" (click)=\"onNewEditClicked()\"></button>\n    </div>\n    <div class=\"ui-g-3\" *ngIf=\"isNew\">\n      <br>\n      <button pButton type=\"button\" icon=\"fa-edit\" label=\"Pick Current\" (click)=\"onNewEditClicked()\"></button>\n    </div>\n    <br/>\n    <div class=\"ui-g-9\">\n      <label for=\"description\">Description</label><br/>\n      <input id=\"description\"\n             pInputText\n             formControlName=\"description\"\n      />\n    </div>\n    <br/>\n    <div class=\"ui-g-9\">\n      <label for=\"paymentAmount\">Payment Amount</label><br/>\n      <input id=\"paymentAmount\"\n             pInputText\n             formControlName=\"paymentAmount\"\n      />\n    </div>\n\n    <div id=\"monthlyBillItems\" *ngIf=\"billType === 'monthly-bill'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"monthlyPaymentDate\">Payment Date</label><br/>\n        <input id=\"monthlyPaymentDate\"\n               pInputText\n               formControlName=\"paymentDate\"\n        />\n      </div>\n    </div>\n\n    <div id=\"yearlyBillItems\" *ngIf=\"billType === 'yearly-bill'\">\n      <br/>\n      <div class=\"ui-g-4\">\n        <label for=\"paymentMonth\">Payment Month</label><br/>\n        <input id=\"paymentMonth\"\n               pInputText\n               formControlName=\"paymentMonth\"\n        />\n      </div>\n      <div class=\"ui-g-1\">&nbsp;</div>\n      <div class=\"ui-g-4\">\n        <label for=\"paymentDay\">Payment Day</label><br/>\n        <input id=\"paymentDay\"\n               pInputText\n               formControlName=\"paymentDay\"\n        />\n      </div>\n    </div>\n\n    <div id=\"oneTimeBillItems\" *ngIf=\"billType === 'one-time-bill'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"oneTimePaymentDate\">Payment Date</label><br/>\n        <p-calendar id=\"oneTimePaymentDate\"\n                    [monthNavigator]=\"true\"\n                    [yearNavigator]=\"true\"\n                    yearRange=\"2000:2060\"\n                    formControlName=\"oneTimePaymentDate\"\n                    [style]=\"{'width':'100%'}\"\n                    [inputStyle]=\"{'width':'100%'}\"\n        ></p-calendar>\n      </div>\n    </div>\n\n    <div id=\"interestBaringDebtItems\" *ngIf=\"billType === 'interest-baring-debt'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"interestBaringPaymentDate\">Payment Date</label><br/>\n        <input id=\"interestBaringPaymentDate\"\n               pInputText\n               formControlName=\"interestBaringPaymentDate\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"startingBalance\">Starting Balance</label><br/>\n        <input id=\"startingBalance\"\n               pInputText\n               formControlName=\"startingBalance\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"apr\">APR</label><br/>\n        <input id=\"apr\"\n               pInputText\n               formControlName=\"apr\"\n        />\n      </div>\n    </div>\n\n\n    <div class=\"ui-g-4\">\n      <button pButton type=\"submit\" label=\"Save\" [disabled]=\"billForm.pristine || billForm.invalid\"></button>\n    </div>\n    <div class=\"ui-g-1\">\n      &nbsp;\n    </div>\n    <div class=\"ui-g-4\">\n      <button type=\"reset\" pButton label=\"Reset\"></button>\n    </div>\n\n  </form>\n\n</div>\n"
+module.exports = "<div class=\"ui-g-12\">\n  <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"billForm\">\n    <div class=\"ui-g-9\" *ngIf=\"!isNew\">\n      <label for=\"nameDropdown\">Name</label><br>\n      <p-dropdown id=\"nameDropdown\"\n                  [style]=\"{'width':'100%'}\"\n                  [options]=\"bills.options\"\n                  formControlName=\"name\"\n                  (onChange)=\"onBillsChange()\"\n      >\n      </p-dropdown>\n    </div>\n\n    <div class=\"ui-g-9\" *ngIf=\"isNew\">\n      <label for=\"name\">Name</label><br/>\n      <input id=\"name\"\n             pInputText\n             formControlName=\"name\"\n      />\n    </div>\n    <div class=\"ui-g-3\" *ngIf=\"!isNew\">\n      <br>\n      <button pButton type=\"button\" icon=\"fa-plus\" label=\"New\" (click)=\"onNewEditClicked()\"></button>\n    </div>\n    <div class=\"ui-g-3\" *ngIf=\"isNew\">\n      <br>\n      <button pButton type=\"button\" icon=\"fa-edit\" label=\"Pick Current\" (click)=\"onNewEditClicked()\"></button>\n    </div>\n    <br/>\n    <div class=\"ui-g-9\">\n      <label for=\"description\">Description</label><br/>\n      <input id=\"description\"\n             pInputText\n             formControlName=\"description\"\n      />\n    </div>\n    <br/>\n    <div class=\"ui-g-9\">\n      <label for=\"paymentAmount\">Payment Amount</label><br/>\n      <input id=\"paymentAmount\"\n             pInputText\n             formControlName=\"paymentAmount\"\n      />\n    </div>\n\n    <div id=\"monthlyBillItems\" *ngIf=\"billType === 'monthly-bill'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"monthlyPaymentDate\">Payment Date</label><br/>\n        <input id=\"monthlyPaymentDate\"\n               pInputText\n               formControlName=\"paymentDate\"\n        />\n      </div>\n    </div>\n\n    <div id=\"yearlyBillItems\" *ngIf=\"billType === 'yearly-bill'\">\n      <br/>\n      <div class=\"ui-g-4\">\n        <label for=\"paymentMonth\">Payment Month</label><br/>\n        <input id=\"paymentMonth\"\n               pInputText\n               formControlName=\"paymentMonth\"\n        />\n      </div>\n      <div class=\"ui-g-1\">&nbsp;</div>\n      <div class=\"ui-g-4\">\n        <label for=\"paymentDay\">Payment Day</label><br/>\n        <input id=\"paymentDay\"\n               pInputText\n               formControlName=\"paymentDay\"\n        />\n      </div>\n    </div>\n\n    <div id=\"oneTimeBillItems\" *ngIf=\"billType === 'one-time-bill'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"oneTimePaymentDate\">Payment Date</label><br/>\n        <p-calendar id=\"oneTimePaymentDate\"\n                    [monthNavigator]=\"true\"\n                    [yearNavigator]=\"true\"\n                    yearRange=\"2000:2060\"\n                    formControlName=\"oneTimePaymentDate\"\n                    [style]=\"{'width':'100%'}\"\n                    [inputStyle]=\"{'width':'100%'}\"\n        ></p-calendar>\n      </div>\n    </div>\n\n    <div id=\"interestBaringDebtItems\" *ngIf=\"billType === 'interest-baring-debt'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"interestBaringPaymentDate\">Payment Date</label><br/>\n        <input id=\"interestBaringPaymentDate\"\n               pInputText\n               formControlName=\"interestBaringPaymentDate\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"interestBaringStartingBalance\">Starting Balance</label><br/>\n        <input id=\"interestBaringStartingBalance\"\n               pInputText\n               formControlName=\"interestBaringStartingBalance\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"apr\">APR</label><br/>\n        <input id=\"apr\"\n               pInputText\n               formControlName=\"apr\"\n        />\n      </div>\n    </div>\n\n    <div id=\"noInterestDebtItems\" *ngIf=\"billType === 'no-interest-debt'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"noInterestPaymentDate\">Payment Date</label><br/>\n        <input id=\"noInterestPaymentDate\"\n               pInputText\n               formControlName=\"noInterestPaymentDate\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"noInterestStartingBalance\">Starting Balance</label><br/>\n        <input id=\"noInterestStartingBalance\"\n               pInputText\n               formControlName=\"startingBalance\"\n        />\n      </div>\n    </div>\n\n\n    <div class=\"ui-g-4\">\n      <button pButton type=\"submit\" label=\"Save\" [disabled]=\"billForm.pristine || billForm.invalid\"></button>\n    </div>\n    <div class=\"ui-g-1\">\n      &nbsp;\n    </div>\n    <div class=\"ui-g-4\">\n      <button type=\"reset\" pButton label=\"Reset\"></button>\n    </div>\n\n  </form>\n\n</div>\n"
 
 /***/ }),
 
@@ -258,6 +269,7 @@ module.exports = "<div class=\"ui-g-12\">\n  <form (ngSubmit)=\"onSubmit()\" [fo
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__bill_service__ = __webpack_require__("../../../../../src/app/bills/bill.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__bill_list_model__ = __webpack_require__("../../../../../src/app/bills/bill-list.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__interest_baring_debt_model__ = __webpack_require__("../../../../../src/app/bills/interest-baring-debt.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__no_interest_debt__ = __webpack_require__("../../../../../src/app/bills/no-interest-debt.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BillComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -268,6 +280,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -319,8 +332,12 @@ var BillComponent = (function () {
             case 'interest-baring-debt':
                 this.bill = new __WEBPACK_IMPORTED_MODULE_9__interest_baring_debt_model__["a" /* InterestBaringDebt */]();
                 this.billForm.addControl('interestBaringPaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-                this.billForm.addControl('startingBalance', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.startingBalance, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('interestBaringStartingBalance', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.startingBalance, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
                 this.billForm.addControl('apr', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.apr, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+            case 'no-interest-debt':
+                this.bill = new __WEBPACK_IMPORTED_MODULE_10__no_interest_debt__["a" /* NoInterestDebt */]();
+                this.billForm.addControl('noInterestPaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('noInterestStartingBalance', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.startingBalance, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
             default:
                 break;
         }
@@ -344,8 +361,8 @@ var BillComponent = (function () {
         if (this.billForm.contains('apr')) {
             this.billForm.removeControl('apr');
         }
-        if (this.billForm.contains('startingBalance')) {
-            this.billForm.removeControl('startingBalance');
+        if (this.billForm.contains('interestBaringStartingBalance')) {
+            this.billForm.removeControl('interestBaringStartingBalance');
         }
     };
     BillComponent.prototype.routeListener = function () {
@@ -723,6 +740,72 @@ var MonthlyBill = (function (_super) {
 }(__WEBPACK_IMPORTED_MODULE_0__bill_model__["a" /* Bill */]));
 
 //# sourceMappingURL=monthly-bill.model.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/bills/no-interest-debt.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bill_model__ = __webpack_require__("../../../../../src/app/bills/bill.model.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NoInterestDebt; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+/**
+ * Created by killerkast on 7/2/17.
+ */
+var NoInterestDebt = (function (_super) {
+    __extends(NoInterestDebt, _super);
+    function NoInterestDebt(id, name, description, paymentAmount, paymentDate, startingBalance) {
+        var _this = _super.call(this, id, name, description, paymentAmount, 'interest-baring-debt') || this;
+        _this._paymentDate = paymentAmount;
+        _this._startingBalance = startingBalance;
+        return _this;
+    }
+    Object.defineProperty(NoInterestDebt.prototype, "paymentDate", {
+        get: function () {
+            return this._paymentDate;
+        },
+        set: function (value) {
+            this._paymentDate = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(NoInterestDebt.prototype, "startingBalance", {
+        get: function () {
+            return this._startingBalance;
+        },
+        set: function (value) {
+            this._startingBalance = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    NoInterestDebt.prototype.updateBill = function (nid) {
+        _super.prototype.updateBill.call(this, nid);
+        this.paymentDate = nid.paymentDate;
+        this.startingBalance = nid.startingBalance;
+    };
+    NoInterestDebt.prototype.getBill = function () {
+        var noInterestDebt = _super.prototype.getBill.call(this);
+        noInterestDebt['paymentDate'] = this.paymentDate;
+        noInterestDebt['startingBalance'] = this.startingBalance;
+        return noInterestDebt;
+    };
+    return NoInterestDebt;
+}(__WEBPACK_IMPORTED_MODULE_0__bill_model__["a" /* Bill */]));
+
+//# sourceMappingURL=no-interest-debt.js.map
 
 /***/ }),
 
