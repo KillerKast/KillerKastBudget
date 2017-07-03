@@ -18,11 +18,12 @@ export class OneTimeBill extends Bill{
     return this._oneTimePaymentDate;
   }
 
-  set oneTimePaymentDate(theOneTimePaymentDate: Date) {
-    this._oneTimePaymentDate = theOneTimePaymentDate;
+  set oneTimePaymentDate(value: Date) {
+    this._oneTimePaymentDate = value;
   }
 
   updateBill(otb: OneTimeBill){
+    console.log(otb);
     super.updateBill(otb);
     this.oneTimePaymentDate = otb.oneTimePaymentDate;
   }
