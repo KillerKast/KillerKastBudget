@@ -2,56 +2,57 @@ import {Bill} from "./bill.model";
 
 export class PaymentPlan extends Bill{
 
-  private _paymentDate: number;
-  private _startingBalance: number;
-  private _lastPaymentDate: Date;
+  private _paymentPlanPaymentDate: number;
+  private _paymentPlanStartingBalance: number;
+  private _paymentPlanLastPaymentDate: Date;
 
   constructor(id?: string, name?: string, description?: string,
-              paymentAmount?: number, paymentDate?: number,
-              startingBalance?: number, lastPaymentDate?: Date){
+              paymentAmount?: number, paymentPlanPaymentDate?: number,
+              paymentPlanStartingBalance?: number, paymentPlanLastPaymentDate?: Date){
 
     super(id, name, description, paymentAmount, 'monthly-bill');
-    this._paymentDate = paymentDate || null;
-    this._startingBalance = startingBalance || null;
-    this._lastPaymentDate = lastPaymentDate || null;
+    this._paymentPlanPaymentDate = paymentPlanPaymentDate || null;
+    this._paymentPlanStartingBalance = paymentPlanStartingBalance || null;
+    this._paymentPlanLastPaymentDate = paymentPlanLastPaymentDate || null;
   }
 
-  get paymentDate(): number {
-    return this._paymentDate;
+
+  get paymentPlanPaymentDate(): number {
+    return this._paymentPlanPaymentDate;
   }
 
-  set paymentDate(thePaymentDate: number) {
-    this._paymentDate = thePaymentDate;
+  set paymentPlanPaymentDate(value: number) {
+    this._paymentPlanPaymentDate = value;
   }
 
-  get startingBalance(): number {
-    return this._startingBalance;
+  get paymentPlanStartingBalance(): number {
+    return this._paymentPlanStartingBalance;
   }
 
-  set startingBalance(value: number) {
-    this._startingBalance = value;
+  set paymentPlanStartingBalance(value: number) {
+    this._paymentPlanStartingBalance = value;
   }
 
-  get lastPaymentDate(): Date {
-    return this._lastPaymentDate;
+  get paymentPlanLastPaymentDate(): Date {
+    return this._paymentPlanLastPaymentDate;
   }
 
-  set lastPaymentDate(value: Date) {
-    this._lastPaymentDate = value;
+  set paymentPlanLastPaymentDate(value: Date) {
+    this._paymentPlanLastPaymentDate = value;
   }
 
   updateBill(pp: PaymentPlan){
     super.updateBill(pp);
-    this.paymentDate = pp.paymentDate;
-    this.startingBalance = pp.startingBalance;
-    this.lastPaymentDate = pp.lastPaymentDate;
+    this.paymentPlanPaymentDate = pp.paymentPlanPaymentDate;
+    this.paymentPlanStartingBalance = pp.paymentPlanStartingBalance;
+    this.paymentPlanLastPaymentDate = pp.paymentPlanLastPaymentDate;
   }
 
   public getBill(){
     let paymentPlan = super.getBill();
-    paymentPlan['paymentDate'] = this.paymentDate;
-    paymentPlan['startingBalance'] = this.startingBalance;
-    paymentPlan['lastPaymentDate'] = this.lastPaymentDate;
+    paymentPlan['paymentDate'] = this.paymentPlanPaymentDate;
+    paymentPlan['startingBalance'] = this.paymentPlanStartingBalance;
+    paymentPlan['lastPaymentDate'] = this.paymentPlanLastPaymentDate;
     return paymentPlan;
   }
 }
