@@ -44,7 +44,6 @@ export class InterestBaringDebt extends Bill{
   }
 
   updateBill(ibd: InterestBaringDebt){
-    console.log(ibd);
     super.updateBill(ibd);
     this.interestBaringPaymentDate = ibd.interestBaringPaymentDate;
     this.interestBaringStartingBalance = ibd.interestBaringStartingBalance;
