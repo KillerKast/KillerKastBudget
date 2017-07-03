@@ -2,31 +2,32 @@ import {Bill} from "./bill.model";
 
 export class MonthlyBill extends Bill{
 
-  private _paymentDate: number;
+  private _monthlyPaymentDate: number;
 
   constructor(id?: string, name?: string, description?: string,
-              paymentAmount?: number, paymentDate?: number){
+              paymentAmount?: number, monthlyPaymentDate?: number){
 
     super(id, name, description, paymentAmount, 'monthly-bill');
-    this._paymentDate = paymentDate || null;
+    this._monthlyPaymentDate = monthlyPaymentDate || null;
   }
 
-  get paymentDate(): number {
-    return this._paymentDate;
+
+  get monthlyPaymentDate(): number {
+    return this._monthlyPaymentDate;
   }
 
-  set paymentDate(thePaymentDate: number) {
-    this._paymentDate = thePaymentDate;
+  set monthlyPaymentDate(value: number) {
+    this._monthlyPaymentDate = value;
   }
 
   updateBill(mb: MonthlyBill){
     super.updateBill(mb);
-    this.paymentDate = mb.paymentDate;
+    this.monthlyPaymentDate = mb.monthlyPaymentDate;
   }
 
   public getBill(){
     let monthlyBill = super.getBill();
-    monthlyBill['paymentDate'] = this.paymentDate;
+    monthlyBill['paymentDate'] = this.monthlyPaymentDate;
     return monthlyBill;
   }
 }
