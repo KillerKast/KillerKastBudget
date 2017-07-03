@@ -10,6 +10,7 @@ import {BillService} from "./bill.service";
 import {BillList} from "./models/bill-list.model";
 import {InterestBaringDebt} from "./models/interest-baring-debt.model";
 import {NoInterestDebt} from "./models/no-interest-debt";
+import {PaymentPlan} from "./models/payment-plan.model";
 
 @Component({
   selector: 'budget-bill',
@@ -52,52 +53,85 @@ export class BillComponent {
     switch (this.billType) {
       case 'monthly-bill':
         this.bill = new MonthlyBill();
-        this.billForm.addControl('paymentDate', new FormControl((<MonthlyBill>this.bill).paymentDate, Validators.required));
+        this.billForm.addControl('monthlyPaymentDate', new FormControl((<MonthlyBill>this.bill).monthlyPaymentDate, Validators.required));
         break;
       case 'yearly-bill':
         this.bill = new YearlyBill();
-        this.billForm.addControl('paymentDay', new FormControl((<YearlyBill>this.bill).paymentDay, Validators.required));
-        this.billForm.addControl('paymentMonth', new FormControl((<YearlyBill>this.bill).paymentMonth, Validators.required));
+        this.billForm.addControl('yearlyPaymentMonth', new FormControl((<YearlyBill>this.bill).yearlyPaymentMonth, Validators.required));
+        this.billForm.addControl('yearlyPaymentDay', new FormControl((<YearlyBill>this.bill).yearlyPaymentDay, Validators.required));
         break;
       case 'one-time-bill':
         this.bill = new OneTimeBill();
         this.billForm.addControl('oneTimePaymentDate', new FormControl((<OneTimeBill>this.bill).oneTimePaymentDate, Validators.required));
         break;
-      case 'interest-baring-debt':
-        this.bill = new InterestBaringDebt();
-        this.billForm.addControl('interestBaringPaymentDate', new FormControl((<InterestBaringDebt>this.bill).paymentDate, Validators.required));
-        this.billForm.addControl('interestBaringStartingBalance', new FormControl((<InterestBaringDebt>this.bill).startingBalance, Validators.required));
-        this.billForm.addControl('apr', new FormControl((<InterestBaringDebt>this.bill).apr, Validators.required));
       case 'no-interest-debt':
         this.bill = new NoInterestDebt();
-        this.billForm.addControl('noInterestPaymentDate', new FormControl((<NoInterestDebt>this.bill).paymentDate, Validators.required));
-        this.billForm.addControl('noInterestStartingBalance', new FormControl((<NoInterestDebt>this.bill).startingBalance, Validators.required));
+        this.billForm.addControl('noInterestPaymentDate', new FormControl((<NoInterestDebt>this.bill).noInterestPaymentDate, Validators.required));
+        this.billForm.addControl('noInterestStartingBalance', new FormControl((<NoInterestDebt>this.bill).noInterestStartingBalance, Validators.required));
+        break;
+      case 'interest-baring-debt':
+        this.bill = new InterestBaringDebt();
+        this.billForm.addControl('interestBaringPaymentDate', new FormControl((<InterestBaringDebt>this.bill).interestBaringPaymentDate, Validators.required));
+        this.billForm.addControl('interestBaringStartingBalance', new FormControl((<InterestBaringDebt>this.bill).interestBaringStartingBalance, Validators.required));
+        this.billForm.addControl('interestBaringAPR', new FormControl((<InterestBaringDebt>this.bill).interestBaringAPR, Validators.required));
+        break;
+      case 'payment-plan':
+        this.bill = new PaymentPlan();
+        this.billForm.addControl('paymentPlanPaymentDate', new FormControl((<PaymentPlan>this.bill).paymentPlanPaymentDate, Validators.required));
+        this.billForm.addControl('paymentPlanStartingBalance', new FormControl((<PaymentPlan>this.bill).paymentPlanStartingBalance, Validators.required));
+        this.billForm.addControl('paymentPlanLastPaymentDate', new FormControl((<PaymentPlan>this.bill).paymentPlanLastPaymentDate, Validators.required));
+        break;
       default:
         break;
     }
   }
 
   deleteFormControls(){
-    if (this.billForm.contains('paymentMonth')) {
-      this.billForm.removeControl('paymentMonth');
+    /**Delete Monthly Bill Items**/
+    if(this.billForm.contains('monthlyPaymentDate')){
+      this.billForm.removeControl('monthlyPaymentDate');
     }
-    if (this.billForm.contains('paymentDay')) {
-      this.billForm.removeControl('paymentDay');
-    }
-    if (this.billForm.contains('oneTimePaymentDate')) {
+    /**Delete One Time Bill Items**/
+    if(this.billForm.contains('oneTimePaymentDate')){
       this.billForm.removeControl('oneTimePaymentDate');
     }
-    if (this.billForm.contains('paymentDate')) {
-      this.billForm.removeControl('paymentDate');
+
+    /**Delete Yearly Bill Items**/
+    if(this.billForm.contains('yearlyPaymentMonth')){
+      this.billForm.removeControl('yearlyPaymentMonth');
     }
-    if(this.billForm.contains('interestBaringPaymentDate')) {
+    if(this.billForm.contains('yearlyPaymentDay')){
+      this.billForm.removeControl('yearlyPaymentDay');
+    }
+
+    /**Delete No Interest Items**/
+    if(this.billForm.contains('noInterestPaymentDate')){
+      this.billForm.removeControl('noInterestPaymentDate');
+    }
+    if(this.billForm.contains('noInterestStartingBalance')){
+      this.billForm.removeControl('noInterestStartingBalance');
+    }
+
+    /**Delete Interest Baring Items**/
+    if(this.billForm.contains('interestBaringPaymentDate')){
       this.billForm.removeControl('interestBaringPaymentDate');
     }
-    if(this.billForm.contains('apr')){
-      this.billForm.removeControl('apr');
-    }
-    if(this.billForm.contains('interestBaringStartingBalance')) {
+    if(this.billForm.contains('interestBaringStartingBalance')){
       this.billForm.removeControl('interestBaringStartingBalance');
+    }
+    if(this.billForm.contains('interestBaringAPR')){
+      this.billForm.removeControl('interestBaringAPR');
+    }
+
+    /**Delete PaymentPlan Items**/
+    if(this.billForm.contains('paymentPlanPaymentDate')){
+      this.billForm.removeControl('paymentPlanPaymentDate');
+    }
+    if(this.billForm.contains('paymentPlanStartingBalance')){
+      this.billForm.removeControl('paymentPlanStartingBalance');
+    }
+    if(this.billForm.contains('paymentPlanLastPaymentDate')){
+      this.billForm.removeControl('paymentPlanLastPaymentDate');
     }
   }
 
@@ -138,14 +172,15 @@ export class BillComponent {
       savingBill.id = this.bills.getSingleBill(savingBill.name).id;
       savingBill.name = this.bills.getSingleBill(savingBill.name).name;
     }
-
+    console.log(savingBill);
     this.bill.updateBill(savingBill);
 
     if (this.isNew) {
-      this.billService.createBill(this.billType, this.bill).subscribe(
+
+      this.billService.createBill(this.billType, this.bill);/*.subscribe(
         data => console.log(data),
         error => console.error(error)
-      );
+      );*/
     } else if (!this.isNew) {
       this.billService.updateBill(this.billType, this.bill).subscribe(
         data => console.log(data),
@@ -161,24 +196,40 @@ export class BillComponent {
     let id = this.billForm.value.name || 0;
 
     this.bill = this.bills.getSingleBill(id);
-
+    this.billForm.controls['name'].patchValue(this.bill.name);
     this.billForm.controls['description'].patchValue(this.bill.description);
     this.billForm.controls['paymentAmount'].patchValue(this.bill.paymentAmount);
+
     if (this.billType === 'monthly-bill') {
-      this.billForm.controls['paymentDate'].patchValue((<MonthlyBill>this.bill).paymentDate);
+      this.billForm.controls['monthlyPaymentDate'].patchValue((<MonthlyBill>this.bill).monthlyPaymentDate);
     }
-    if (this.billType === 'yearly-bill') {
-      this.billForm.controls['paymentDay'].patchValue((<YearlyBill>this.bill).paymentDay);
-      this.billForm.controls['paymentMonth'].patchValue((<YearlyBill>this.bill).paymentMonth);
-    }
+
     if (this.billType === 'one-time-bill') {
       this.billForm.controls['oneTimePaymentDate'].patchValue((<OneTimeBill>this.bill).oneTimePaymentDate);
     }
-    if(this.billType === 'interest-baring-debt'){
-      this.billForm.controls['interestBaringPaymentDate'].patchValue((<InterestBaringDebt>this.bill).paymentDate);
-      this.billForm.controls['startingBalance'].patchValue((<InterestBaringDebt>this.bill).startingBalance);
-      this.billForm.controls['apr'].patchValue((<InterestBaringDebt>this.bill).apr);
+
+    if (this.billType === 'yearly-bill') {
+      this.billForm.controls['yearlyPaymentMonth'].patchValue((<YearlyBill>this.bill).yearlyPaymentMonth);
+      this.billForm.controls['yearlyPaymentDay'].patchValue((<YearlyBill>this.bill).yearlyPaymentDay);
     }
+
+    if (this.billType === 'no-interest-debt'){
+      this.billForm.controls['noInterestPaymentDate'].patchValue((<NoInterestDebt>this.bill).noInterestPaymentDate);
+      this.billForm.controls['noInterestStartingBalance'].patchValue((<NoInterestDebt>this.bill).noInterestStartingBalance);
+    }
+
+    if (this.billType === 'interest-baring-debt'){
+      this.billForm.controls['interestBaringPaymentDate'].patchValue((<InterestBaringDebt>this.bill).interestBaringPaymentDate);
+      this.billForm.controls['interestBaringStartingBalance'].patchValue((<InterestBaringDebt>this.bill).interestBaringStartingBalance);
+      this.billForm.controls['interestBaringAPR'].patchValue((<InterestBaringDebt>this.bill).interestBaringAPR);
+    }
+
+    if (this.billType === 'payment-plan'){
+      this.billForm.controls['paymentPlanPaymentDate'].patchValue((<PaymentPlan>this.bill).paymentPlanPaymentDate);
+      this.billForm.controls['paymentPlanStartingBalance'].patchValue((<PaymentPlan>this.bill).paymentPlanStartingBalance);
+      this.billForm.controls['paymentPlanLastPaymentDate'].patchValue((<PaymentPlan>this.bill).paymentPlanLastPaymentDate);
+    }
+
     this.billForm.markAsPristine();
   }
 
