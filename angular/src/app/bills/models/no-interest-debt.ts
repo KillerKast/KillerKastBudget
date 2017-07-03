@@ -3,42 +3,42 @@ import {Bill} from "./bill.model";
  * Created by killerkast on 7/2/17.
  */
 export class NoInterestDebt extends Bill{
-  private _paymentDate;
-  private _startingBalance;
+  private _noInterestPaymentDate;
+  private _noInterestStartingBalance;
 
   constructor(id?: string, name?: string, description?: string,
-              paymentAmount?: number, paymentDate?: number, startingBalance?: number){
+              paymentAmount?: number, noInterestPaymentDate?: number, noInterestStartingBalance?: number){
     super(id, name, description, paymentAmount, 'interest-baring-debt');
-    this._paymentDate = paymentAmount;
-    this._startingBalance = startingBalance;
+    this._noInterestPaymentDate = noInterestPaymentDate;
+    this._noInterestStartingBalance = noInterestStartingBalance;
   }
 
-  get paymentDate() {
-    return this._paymentDate;
+  get noInterestPaymentDate() {
+    return this._noInterestPaymentDate;
   }
 
-  set paymentDate(value) {
-    this._paymentDate = value;
+  set noInterestPaymentDate(value) {
+    this._noInterestPaymentDate = value;
   }
 
-  get startingBalance() {
-    return this._startingBalance;
+  get noInterestStartingBalance() {
+    return this._noInterestStartingBalance;
   }
 
-  set startingBalance(value) {
-    this._startingBalance = value;
+  set noInterestStartingBalance(value) {
+    this._noInterestStartingBalance = value;
   }
 
   updateBill(nid: NoInterestDebt){
     super.updateBill(nid);
-    this.paymentDate = nid.paymentDate;
-    this.startingBalance = nid.startingBalance;
+    this.noInterestPaymentDate = nid.noInterestPaymentDate;
+    this.noInterestStartingBalance = nid.noInterestStartingBalance;
   }
 
   getBill(){
     let noInterestDebt = super.getBill();
-    noInterestDebt['paymentDate'] = this.paymentDate;
-    noInterestDebt['startingBalance'] = this.startingBalance;
+    noInterestDebt['paymentDate'] = this.noInterestPaymentDate;
+    noInterestDebt['startingBalance'] = this.noInterestStartingBalance;
     return noInterestDebt;
   }
 }
