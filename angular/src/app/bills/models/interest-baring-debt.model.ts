@@ -5,56 +5,57 @@ import {Bill} from "./bill.model";
 
 export class InterestBaringDebt extends Bill{
 
-  private _paymentDate: number;
-  private _startingBalance: number;
-  private _apr: number;
+  private _interestBaringPaymentDate: number;
+  private _interestBaringStartingBalance: number;
+  private _interestBaringAPR: number;
 
   constructor(id?: string, name?: string, description?: string,
-              paymentAmount?: number, paymentDate?: number, startingBalance?: number,
-              apr?: number){
+              paymentAmount?: number, interestBaringPaymentDate?: number, interestBaringStartingBalance?: number,
+              interestBaringAPR?: number){
     super(id, name, description, paymentAmount, 'interest-baring-debt');
-    this._paymentDate = paymentAmount;
-    this._startingBalance = startingBalance;
-    this._apr = apr;
+    this._interestBaringPaymentDate = interestBaringPaymentDate;
+    this._interestBaringStartingBalance = interestBaringStartingBalance;
+    this._interestBaringAPR = interestBaringAPR;
   }
 
 
-  get paymentDate(): number {
-    return this._paymentDate;
+  get interestBaringPaymentDate(): number {
+    return this._interestBaringPaymentDate;
   }
 
-  set paymentDate(value: number) {
-    this._paymentDate = value;
+  set interestBaringPaymentDate(value: number) {
+    this._interestBaringPaymentDate = value;
   }
 
-  get startingBalance(): number {
-    return this._startingBalance;
+  get interestBaringStartingBalance(): number {
+    return this._interestBaringStartingBalance;
   }
 
-  set startingBalance(value: number) {
-    this._startingBalance = value;
+  set interestBaringStartingBalance(value: number) {
+    this._interestBaringStartingBalance = value;
   }
 
-  get apr(): number {
-    return this._apr;
+  get interestBaringAPR(): number {
+    return this._interestBaringAPR;
   }
 
-  set apr(value: number) {
-    this._apr = value;
+  set interestBaringAPR(value: number) {
+    this._interestBaringAPR = value;
   }
 
   updateBill(ibd: InterestBaringDebt){
+    console.log(ibd);
     super.updateBill(ibd);
-    this.paymentDate = ibd.paymentDate;
-    this.startingBalance = ibd.startingBalance;
-    this.apr = ibd.apr;
+    this.interestBaringPaymentDate = ibd.interestBaringPaymentDate;
+    this.interestBaringStartingBalance = ibd.interestBaringStartingBalance;
+    this.interestBaringAPR = ibd.interestBaringAPR;
   }
 
   getBill(){
     let interestBaringDebt = super.getBill();
-    interestBaringDebt['paymentDate'] = this.paymentDate;
-    interestBaringDebt['startingBalance'] = this.startingBalance;
-    interestBaringDebt['apr'] = this.apr;
+    interestBaringDebt['paymentDate'] = this.interestBaringPaymentDate;
+    interestBaringDebt['startingBalance'] = this.interestBaringStartingBalance;
+    interestBaringDebt['apr'] = this.interestBaringAPR;
     return interestBaringDebt;
   }
 
