@@ -2,44 +2,44 @@ import {Bill} from "./bill.model";
 
 export class YearlyBill extends Bill{
 
-  private _paymentDay: number;
-  private _paymentMonth: number;
+  private _yearlyPaymentDay: number;
+  private _yearlyPaymentMonth: number;
 
   constructor(id?:string, name?: string, description?: string,
-              paymentAmount?: number, paymentDay?: number,
-              paymentMonth?: number){
+              paymentAmount?: number, yearlyPaymentDay?: number,
+              yearlyPaymentMonth?: number){
 
     super(id, name, description, paymentAmount, 'yearly-bill');
-    this._paymentDay = paymentDay || null;
-    this._paymentMonth = paymentMonth || null;
+    this._yearlyPaymentDay = yearlyPaymentDay || null;
+    this._yearlyPaymentMonth = yearlyPaymentMonth || null;
   }
 
-  get paymentDay(): number {
-    return this._paymentDay;
+  get yearlyPaymentDay(): number {
+    return this._yearlyPaymentDay;
   }
 
-  set paymentDay(thePaymentDay: number) {
-    this._paymentDay = thePaymentDay;
+  set yearlyPaymentDay(value: number) {
+    this._yearlyPaymentDay = value;
   }
 
-  get paymentMonth(): number {
-    return this._paymentMonth;
+  get yearlyPaymentMonth(): number {
+    return this._yearlyPaymentMonth;
   }
 
-  set paymentMonth(thePaymentMonth: number) {
-    this._paymentMonth = thePaymentMonth;
+  set yearlyPaymentMonth(value: number) {
+    this._yearlyPaymentMonth = value;
   }
 
   updateBill(yb: YearlyBill){
     super.updateBill(yb);
-    this.paymentDay = yb.paymentDay;
-    this.paymentMonth = yb.paymentMonth;
+    this.yearlyPaymentDay = yb.yearlyPaymentDay;
+    this.yearlyPaymentMonth = yb.yearlyPaymentMonth;
   }
 
   public getBill(){
     let yearlyBill = super.getBill();
-    yearlyBill['paymentDay'] = this.paymentDay;
-    yearlyBill['paymentMonth'] = this.paymentMonth;
+    yearlyBill['paymentDay'] = this.yearlyPaymentDay;
+    yearlyBill['paymentMonth'] = this.yearlyPaymentMonth;
     return yearlyBill;
   }
 }

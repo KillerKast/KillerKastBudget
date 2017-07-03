@@ -23,7 +23,6 @@ export class OneTimeBill extends Bill{
   }
 
   updateBill(otb: OneTimeBill){
-    console.log(otb);
     super.updateBill(otb);
     this.oneTimePaymentDate = otb.oneTimePaymentDate;
   }
