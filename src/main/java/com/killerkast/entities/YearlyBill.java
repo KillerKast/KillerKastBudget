@@ -1,11 +1,16 @@
 package com.killerkast.entities;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.math.BigDecimal;
 
+@Document
 public class YearlyBill extends Bill {
 
     private Integer paymentMonth;
     private Integer paymentDay;
+
+    public YearlyBill() {}
 
     public YearlyBill(String name, String description, BigDecimal paymentAmount, Integer paymentMonth, Integer paymentDay) {
         super(name, description, paymentAmount);

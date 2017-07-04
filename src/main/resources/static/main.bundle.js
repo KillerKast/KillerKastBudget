@@ -347,6 +347,7 @@ var BillComponent = (function () {
         var savingBill = this.billForm.value;
         var tempId = this.bill.id;
         this.bill.updateBill(savingBill);
+        console.log(this.bill);
         if (this.isNew) {
             var that_1 = this;
             this.bill.id = null;
@@ -598,8 +599,17 @@ var BillList = (function () {
         return bill;
     };
     BillList.prototype.getBillOptions = function (id) {
+        var billOptions;
         var bill = this.bills.find(function (bill) { return bill.id === id; });
-        return { label: bill.name, value: bill.id };
+        console.log(typeof bill);
+        if (typeof bill === 'undefined') {
+            console.log("ID equals null.");
+            billOptions = { label: 'Please select a bill', value: null };
+        }
+        else {
+            billOptions = { label: bill.name, value: bill.id };
+        }
+        return billOptions;
     };
     return BillList;
 }());

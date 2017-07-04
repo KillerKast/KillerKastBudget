@@ -1,12 +1,22 @@
 package com.killerkast.entities;
 
-import java.math.BigDecimal;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+@Document
 public class InterestBaringDebt extends Bill {
 
     private Integer paymentDate;
     private BigDecimal startingBalance;
     private BigDecimal apr;
+
+    @DBRef
+    private List<InterestBaringPaymentSchedule> interestBaringPaymentSchedules;
+
+    public InterestBaringDebt() {}
 
     public InterestBaringDebt(String name, String description, BigDecimal paymentAmount, Integer paymentDate, BigDecimal startingBalance, BigDecimal apr) {
         super(name, description, paymentAmount);
@@ -39,18 +49,12 @@ public class InterestBaringDebt extends Bill {
         this.apr = apr;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "Interest Baring Debt:{" +
-                "id: " + this.getId() +
-                ", name: " + this.getName() +
-                ", description: " + this.getDescription() +
-                ", paymentAmount: " + this.getPaymentAmount().toString() +
-                ", paymentDate: " + this.getPaymentDate() +
-                ", startingBalance: " + this.getStartingBalance() +
-                ", APR: " + this.getApr() +
-                "}}";
+    public List<InterestBaringPaymentSchedule> getInterestBaringPaymentSchedules() {
+        return interestBaringPaymentSchedules;
+    }
+
+    public void setInterestBaringPaymentSchedules(List<InterestBaringPaymentSchedule> interestBaringPaymentSchedules) {
+        this.interestBaringPaymentSchedules = interestBaringPaymentSchedules;
     }
 
     @Override

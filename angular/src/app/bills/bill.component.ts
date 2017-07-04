@@ -178,7 +178,7 @@ export class BillComponent {
     let savingBill: any = this.billForm.value;
     let tempId: string = this.bill.id;
     this.bill.updateBill(savingBill);
-
+    console.log(this.bill);
     if (this.isNew) {
       let that = this;
       this.bill.id = null;

@@ -6,6 +6,7 @@ import {OneTimeBill} from "./one-time-bill.model";
 import {InterestBaringDebt} from "./interest-baring-debt.model";
 import {NoInterestDebt} from "./no-interest-debt";
 import {PaymentPlan} from "./payment-plan.model";
+import {variable} from "@angular/compiler/src/output/output_ast";
 
 /**
  * Created by Jonathan on 6/4/2017.
@@ -121,8 +122,17 @@ export class BillList {
   }
 
   getBillOptions(id: string){
+    let billOptions;
+
     let bill = this.bills.find(bill => bill.id === id);
-    return {label: bill.name, value: bill.id };
+    console.log(typeof bill);
+    if(typeof bill  === 'undefined'){
+      console.log("ID equals null.");
+      billOptions = {label: 'Please select a bill', value: null};
+    } else {
+      billOptions = {label: bill.name, value: bill.id };
+    }
+    return billOptions;
   }
 }
 

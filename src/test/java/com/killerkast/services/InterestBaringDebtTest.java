@@ -40,9 +40,9 @@ public class InterestBaringDebtTest {
         return new InterestBaringDebt(
                 "InterestBaringDebtTest",
                 "Interest Baring Debt Test",
-                new BigDecimal("123.45"),
+                new BigDecimal("150.00"),
                 12,
-                new BigDecimal("345.00"),
+                new BigDecimal("3000.00"),
                 new BigDecimal("3.00")
         );
     }
