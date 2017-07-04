@@ -7,6 +7,8 @@ public class OneTimeBill extends Bill {
 
     private Date paymentDate;
 
+    public OneTimeBill(){}
+
     public OneTimeBill(String name, String description, BigDecimal paymentAmount, Date paymentDate){
         super(name, description, paymentAmount);
 

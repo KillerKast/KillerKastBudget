@@ -17,14 +17,13 @@ export class MenuComponent implements OnInit {
     this.items = [{
       label: 'Bills',
       items: [
-            {label: 'Interest Baring Debt', routerLink: ['bill','interest-baring-debt']},
-            {label: 'Monthly Bill', routerLink: ['bill','monthly-bill']},
-            {label: 'No Interest Debt', routerLink: ['bill', 'no-interest-debt']},
-            {label: 'One Time Bill', routerLink: ['bill', 'one-time-bill']},
-            {label: 'Payment Plan', routerLink: ['bill', 'payment-plan-debt']},
-            {label: 'Yearly Bill', routerLink: ['bill', 'yearly-bill']},
-          ]},
-        {label: 'Daily'}
-      ]
-    }
+          {label: 'Monthly Bill', routerLink: ['bill','monthly-bill']},
+          {label: 'One Time Bill', routerLink: ['bill', 'one-time-bill']},
+          {label: 'Yearly Bill', routerLink: ['bill', 'yearly-bill']},
+          {label: 'Interest Baring Debt', routerLink: ['bill','interest-baring-debt']},
+          {label: 'No Interest Debt', routerLink: ['bill', 'no-interest-debt']},
+          {label: 'Payment Plan', routerLink: ['bill', 'payment-plan']},
+      ]},
+    ]
+  }
 }

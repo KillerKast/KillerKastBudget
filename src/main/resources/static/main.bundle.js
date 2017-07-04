@@ -151,7 +151,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "input{\n  width:100%;\n}\n\nbutton{\n  width:100%;\n}\n\np-calendar{\n  width:100%;\n}\n\np-calendar span{\n  width: 100%;\n}\n\n", ""]);
+exports.push([module.i, "input{\n  width:100%;\n}\n\nbutton{\n  width:100%;\n}\n\np-calendar{\n  width:100%;\n}\n\np-calendar span{\n  width: 100%;\n}\n\n#nameDropdown{\n  width:100%;\n}\n", ""]);
 
 // exports
 
@@ -164,7 +164,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/bills/bill.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ui-g-12\">\n  <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"billForm\">\n    <div class=\"ui-g-9\" *ngIf=\"!isNew\">\n      <label for=\"nameDropdown\">Name</label><br>\n      <p-dropdown id=\"nameDropdown\"\n                  [style]=\"{'width':'100%'}\"\n                  [options]=\"bills.options\"\n                  formControlName=\"name\"\n                  (onChange)=\"onBillsChange()\"\n      >\n      </p-dropdown>\n    </div>\n\n    <div class=\"ui-g-9\" *ngIf=\"isNew\">\n      <label for=\"name\">Name</label><br/>\n      <input id=\"name\"\n             pInputText\n             formControlName=\"name\"\n      />\n    </div>\n    <div class=\"ui-g-3\" *ngIf=\"!isNew\">\n      <br>\n      <button pButton type=\"button\" icon=\"fa-plus\" label=\"New\" (click)=\"onNewEditClicked()\"></button>\n    </div>\n    <div class=\"ui-g-3\" *ngIf=\"isNew\">\n      <br>\n      <button pButton type=\"button\" icon=\"fa-edit\" label=\"Pick Current\" (click)=\"onNewEditClicked()\"></button>\n    </div>\n    <br/>\n    <div class=\"ui-g-9\">\n      <label for=\"description\">Description</label><br/>\n      <input id=\"description\"\n             pInputText\n             formControlName=\"description\"\n      />\n    </div>\n    <br/>\n    <div class=\"ui-g-9\">\n      <label for=\"paymentAmount\">Payment Amount</label><br/>\n      <input id=\"paymentAmount\"\n             pInputText\n             formControlName=\"paymentAmount\"\n      />\n    </div>\n\n    <div id=\"monthlyBillItems\" *ngIf=\"billType === 'monthly-bill'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"monthlyPaymentDate\">Payment Date</label><br/>\n        <input id=\"monthlyPaymentDate\"\n               pInputText\n               formControlName=\"paymentDate\"\n        />\n      </div>\n    </div>\n\n    <div id=\"yearlyBillItems\" *ngIf=\"billType === 'yearly-bill'\">\n      <br/>\n      <div class=\"ui-g-4\">\n        <label for=\"paymentMonth\">Payment Month</label><br/>\n        <input id=\"paymentMonth\"\n               pInputText\n               formControlName=\"paymentMonth\"\n        />\n      </div>\n      <div class=\"ui-g-1\">&nbsp;</div>\n      <div class=\"ui-g-4\">\n        <label for=\"paymentDay\">Payment Day</label><br/>\n        <input id=\"paymentDay\"\n               pInputText\n               formControlName=\"paymentDay\"\n        />\n      </div>\n    </div>\n\n    <div id=\"oneTimeBillItems\" *ngIf=\"billType === 'one-time-bill'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"oneTimePaymentDate\">Payment Date</label><br/>\n        <p-calendar id=\"oneTimePaymentDate\"\n                    [monthNavigator]=\"true\"\n                    [yearNavigator]=\"true\"\n                    yearRange=\"2000:2060\"\n                    formControlName=\"oneTimePaymentDate\"\n                    [style]=\"{'width':'100%'}\"\n                    [inputStyle]=\"{'width':'100%'}\"\n        ></p-calendar>\n      </div>\n    </div>\n\n    <div id=\"interestBaringDebtItems\" *ngIf=\"billType === 'interest-baring-debt'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"interestBaringPaymentDate\">Payment Date</label><br/>\n        <input id=\"interestBaringPaymentDate\"\n               pInputText\n               formControlName=\"interestBaringPaymentDate\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"interestBaringStartingBalance\">Starting Balance</label><br/>\n        <input id=\"interestBaringStartingBalance\"\n               pInputText\n               formControlName=\"interestBaringStartingBalance\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"apr\">APR</label><br/>\n        <input id=\"apr\"\n               pInputText\n               formControlName=\"apr\"\n        />\n      </div>\n    </div>\n\n    <div id=\"noInterestDebtItems\" *ngIf=\"billType === 'no-interest-debt'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"noInterestPaymentDate\">Payment Date</label><br/>\n        <input id=\"noInterestPaymentDate\"\n               pInputText\n               formControlName=\"noInterestPaymentDate\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"noInterestStartingBalance\">Starting Balance</label><br/>\n        <input id=\"noInterestStartingBalance\"\n               pInputText\n               formControlName=\"noInterestStartingBalance\"\n        />\n      </div>\n    </div>\n\n    <div id=\"paymentPlanItems\" *ngIf=\"billType === 'payment-plan'\">\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"paymentPlanPaymentDate\">Payment Date</label><br/>\n        <input id=\"paymentPlanPaymentDate\"\n               pInputText\n               formControlName=\"paymentPlanPaymentDate\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"paymentPlanStartingBalance\">Starting Balance</label><br/>\n        <input id=\"paymentPlanStartingBalance\"\n               pInputText\n               formControlName=\"paymentPlanStartingBalance\"\n        />\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"paymentPlanLastPaymentDate\">Last Payment Date</label><br/>\n        <input id=\"paymentPlanLastPaymentDate\"\n               pInputText\n               formControlName=\"paymentPlanLastPaymentDate\"\n        />\n      </div>\n    </div>\n\n\n    <div class=\"ui-g-4\">\n      <button pButton type=\"submit\" label=\"Save\" [disabled]=\"billForm.pristine || billForm.invalid\"></button>\n    </div>\n    <div class=\"ui-g-1\">\n      &nbsp;\n    </div>\n    <div class=\"ui-g-4\">\n      <button type=\"reset\" pButton label=\"Reset\"></button>\n    </div>\n\n  </form>\n\n</div>\n"
+module.exports = "<div class=\"ui-g-12\">\n  <div class=\"ui-g-4\">\n    <button pButton type=\"button\" label=\"{{newEditButtonLabel}}\" (click)=\"newEditButtonClicked()\"></button>\n  </div>\n  <div class=\"ui-g-12\">&nbsp;</div>\n  <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"billForm\">\n    <div class=\"ui-g-4\" *ngIf=\"!isNew\">\n      <label for=\"billInfo\">Bill</label><br/>\n      <p-dropdown\n        id=\"billInfo\"\n        [style]=\"{'width':'100%'}\"\n        [options]=\"bills.options\"\n        formControlName=\"billInfo\"\n        (onChange)=\"onBillsChange()\">\n      </p-dropdown>\n    </div>\n\n    <div id=\"updateBillDiv\">\n      <div class=\"ui-g-9\">\n        <label for=\"name\">Name</label><br/>\n        <input id=\"name\" pInputText formControlName=\"name\"/>\n      </div>\n    </div>\n\n    <br/>\n\n    <div class=\"ui-g-9\">\n      <label for=\"description\">Description</label><br/>\n      <input id=\"description\" pInputText formControlName=\"description\"/>\n    </div>\n\n    <br/>\n\n    <div class=\"ui-g-9\">\n      <label for=\"paymentAmount\">Payment Amount</label><br/>\n      <input id=\"paymentAmount\" pInputText formControlName=\"paymentAmount\"/>\n    </div>\n\n    <br/>\n\n    <div id=\"monthlyBillDiv\" *ngIf=\"billType === 'monthly-bill'\">\n      <div class=\"ui-g-9\">\n        <label for=\"monthlyPaymentDate\">Payment Date</label><br/>\n        <input id=\"monthlyPaymentDate\" pInputText formControlName=\"monthlyPaymentDate\"/>\n      </div>\n    </div>\n\n    <div id=\"oneTimeBillDiv\" *ngIf=\"billType === 'one-time-bill'\">\n      <div class=\"ui-g-9\">\n        <label for=\"oneTimePaymentDate\">Payment Date</label><br/>\n        <p-calendar id=\"oneTimePaymentDate\"\n                    [monthNavigator]=\"true\"\n                    [yearNavigator]=\"true\"\n                    yearRange=\"2000:2060\"\n                    formControlName=\"oneTimePaymentDate\"\n                    [style]=\"{'width':'100%'}\"\n                    [inputStyle]=\"{'width':'100%'}\">\n        </p-calendar>\n      </div>\n    </div>\n\n    <div id=\"yearlyBillDiv\" *ngIf=\"billType === 'yearly-bill'\">\n      <div class=\"ui-g-4\">\n        <label for=\"yearlyPaymentMonth\">Payment Month</label><br/>\n        <input id=\"yearlyPaymentMonth\" pInputText formControlName=\"yearlyPaymentMonth\"/>\n      </div>\n      <div class=\"ui-g-1\">&nbsp;</div>\n      <div class=\"ui-g-4\">\n        <label for=\"yearlyPaymentDay\">Payment Day</label><br/>\n        <input id=\"yearlyPaymentDay\" pInputText formControlName=\"yearlyPaymentDay\"/>\n      </div>\n    </div>\n\n    <div id=\"noInterestDiv\" *ngIf=\"billType === 'no-interest-debt'\">\n      <div class=\"ui-g-9\">\n        <label for=\"noInterestPaymentDate\">Payment Date</label><br/>\n        <input id=\"noInterestPaymentDate\" pInputText formControlName=\"noInterestPaymentDate\"/>\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"noInterestStartingBalance\">Starting Balance</label><br/>\n        <input id=\"noInterestStartingBalance\" pInputText formControlName=\"noInterestStartingBalance\"/>\n      </div>\n    </div>\n\n    <div id=\"InterestBaringDiv\" *ngIf=\"billType === 'interest-baring-debt'\">\n      <div class=\"ui-g-9\">\n        <label for=\"interestBaringPaymentDate\">Payment Date</label><br/>\n        <input id=\"interestBaringPaymentDate\" pInputText formControlName=\"interestBaringPaymentDate\"/>\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"interestBaringStartingBalance\">Starting Balance</label><br/>\n        <input id=\"interestBaringStartingBalance\" pInputText formControlName=\"interestBaringStartingBalance\"/>\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"interestBaringAPR\">APR</label><br/>\n        <input id=\"interestBaringAPR\" pInputText formControlName=\"interestBaringAPR\"/>\n      </div>\n    </div>\n\n    <div id=\"PaymentPlanDiv\" *ngIf=\"billType === 'payment-plan'\">\n      <div class=\"ui-g-9\">\n        <label for=\"paymentPlanPaymentDate\">Payment Date</label><br/>\n        <input id=\"paymentPlanPaymentDate\" pInputText formControlName=\"paymentPlanPaymentDate\"/>\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"paymentPlanStartingBalance\">Starting Balance</label><br/>\n        <input id=\"paymentPlanStartingBalance\" pInputText formControlName=\"paymentPlanStartingBalance\"/>\n      </div>\n      <br/>\n      <div class=\"ui-g-9\">\n        <label for=\"paymentPlanLastPaymentDate\">Last Payment Date</label><br/>\n        <p-calendar id=\"paymentPlanLastPaymentDate\"\n                    [monthNavigator]=\"true\"\n                    [yearNavigator]=\"true\"\n                    yearRange=\"2000:2060\"\n                    formControlName=\"paymentPlanLastPaymentDate\"\n                    [style]=\"{'width':'100%'}\"\n                    [inputStyle]=\"{'width':'100%'}\">\n\n        </p-calendar>\n      </div>\n    </div>\n    <div class=\"ui-g-12\">&nbsp;</div>\n    <div class=\"ui-g-3\">\n      <button pButton type=\"submit\" label=\"Save\" [disabled]=\"billForm.pristine || billForm.invalid\"></button>\n    </div>\n    <div class=\"ui-g-3\">\n      <button type=\"reset\" pButton label=\"Reset\"></button>\n    </div>\n    <div class=\"ui-g-3\">\n      <button class=\"ui-button-danger\" type=\"button\" pButton label=\"Delete\" (click)=\"deleteBill()\"></button>\n    </div>\n  </form>\n</div>\n"
 
 /***/ }),
 
@@ -184,6 +184,7 @@ module.exports = "<div class=\"ui-g-12\">\n  <form (ngSubmit)=\"onSubmit()\" [fo
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_bill_list_model__ = __webpack_require__("../../../../../src/app/bills/models/bill-list.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__models_interest_baring_debt_model__ = __webpack_require__("../../../../../src/app/bills/models/interest-baring-debt.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_no_interest_debt__ = __webpack_require__("../../../../../src/app/bills/models/no-interest-debt.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__models_payment_plan_model__ = __webpack_require__("../../../../../src/app/bills/models/payment-plan.model.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BillComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -205,11 +206,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var BillComponent = (function () {
     function BillComponent(route, fb, billService) {
         this.route = route;
         this.fb = fb;
         this.billService = billService;
+        this.newEditButtonLabel = 'New';
         this.isNew = false;
         this.bills = new __WEBPACK_IMPORTED_MODULE_8__models_bill_list_model__["a" /* BillList */]();
         this.billType = route.snapshot.params['billType'] || 'monthly-bill';
@@ -222,6 +225,7 @@ var BillComponent = (function () {
     };
     BillComponent.prototype.buildBaseForm = function () {
         this.billForm = this.fb.group({
+            billInfo: [''],
             name: ['', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required],
             description: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required]],
             paymentAmount: ['', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required, __WEBPACK_IMPORTED_MODULE_2_ng2_validation__["CustomValidators"].number]],
@@ -232,51 +236,80 @@ var BillComponent = (function () {
         switch (this.billType) {
             case 'monthly-bill':
                 this.bill = new __WEBPACK_IMPORTED_MODULE_4__models_monthly_bill_model__["a" /* MonthlyBill */]();
-                this.billForm.addControl('paymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('monthlyPaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.monthlyPaymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
                 break;
             case 'yearly-bill':
                 this.bill = new __WEBPACK_IMPORTED_MODULE_5__models_yearly_bill_model__["a" /* YearlyBill */]();
-                this.billForm.addControl('paymentDay', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDay, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-                this.billForm.addControl('paymentMonth', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentMonth, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('yearlyPaymentMonth', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.yearlyPaymentMonth, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('yearlyPaymentDay', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.yearlyPaymentDay, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
                 break;
             case 'one-time-bill':
                 this.bill = new __WEBPACK_IMPORTED_MODULE_6__models_one_time_bill_model__["a" /* OneTimeBill */]();
                 this.billForm.addControl('oneTimePaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.oneTimePaymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
                 break;
-            case 'interest-baring-debt':
-                this.bill = new __WEBPACK_IMPORTED_MODULE_9__models_interest_baring_debt_model__["a" /* InterestBaringDebt */]();
-                this.billForm.addControl('interestBaringPaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-                this.billForm.addControl('interestBaringStartingBalance', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.startingBalance, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-                this.billForm.addControl('apr', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.apr, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
             case 'no-interest-debt':
                 this.bill = new __WEBPACK_IMPORTED_MODULE_10__models_no_interest_debt__["a" /* NoInterestDebt */]();
-                this.billForm.addControl('noInterestPaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
-                this.billForm.addControl('noInterestStartingBalance', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.startingBalance, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('noInterestPaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.noInterestPaymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('noInterestStartingBalance', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.noInterestStartingBalance, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                break;
+            case 'interest-baring-debt':
+                this.bill = new __WEBPACK_IMPORTED_MODULE_9__models_interest_baring_debt_model__["a" /* InterestBaringDebt */]();
+                this.billForm.addControl('interestBaringPaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.interestBaringPaymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('interestBaringStartingBalance', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.interestBaringStartingBalance, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('interestBaringAPR', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.interestBaringAPR, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                break;
+            case 'payment-plan':
+                this.bill = new __WEBPACK_IMPORTED_MODULE_11__models_payment_plan_model__["a" /* PaymentPlan */]();
+                this.billForm.addControl('paymentPlanPaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentPlanPaymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('paymentPlanStartingBalance', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentPlanStartingBalance, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                this.billForm.addControl('paymentPlanLastPaymentDate', new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["FormControl"](this.bill.paymentPlanLastPaymentDate, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["Validators"].required));
+                break;
             default:
                 break;
         }
     };
     BillComponent.prototype.deleteFormControls = function () {
-        if (this.billForm.contains('paymentMonth')) {
-            this.billForm.removeControl('paymentMonth');
+        /**Delete Monthly Bill Items**/
+        if (this.billForm.contains('monthlyPaymentDate')) {
+            this.billForm.removeControl('monthlyPaymentDate');
         }
-        if (this.billForm.contains('paymentDay')) {
-            this.billForm.removeControl('paymentDay');
-        }
+        /**Delete One Time Bill Items**/
         if (this.billForm.contains('oneTimePaymentDate')) {
             this.billForm.removeControl('oneTimePaymentDate');
         }
-        if (this.billForm.contains('paymentDate')) {
-            this.billForm.removeControl('paymentDate');
+        /**Delete Yearly Bill Items**/
+        if (this.billForm.contains('yearlyPaymentMonth')) {
+            this.billForm.removeControl('yearlyPaymentMonth');
         }
+        if (this.billForm.contains('yearlyPaymentDay')) {
+            this.billForm.removeControl('yearlyPaymentDay');
+        }
+        /**Delete No Interest Items**/
+        if (this.billForm.contains('noInterestPaymentDate')) {
+            this.billForm.removeControl('noInterestPaymentDate');
+        }
+        if (this.billForm.contains('noInterestStartingBalance')) {
+            this.billForm.removeControl('noInterestStartingBalance');
+        }
+        /**Delete Interest Baring Items**/
         if (this.billForm.contains('interestBaringPaymentDate')) {
             this.billForm.removeControl('interestBaringPaymentDate');
         }
-        if (this.billForm.contains('apr')) {
-            this.billForm.removeControl('apr');
-        }
         if (this.billForm.contains('interestBaringStartingBalance')) {
             this.billForm.removeControl('interestBaringStartingBalance');
+        }
+        if (this.billForm.contains('interestBaringAPR')) {
+            this.billForm.removeControl('interestBaringAPR');
+        }
+        /**Delete PaymentPlan Items**/
+        if (this.billForm.contains('paymentPlanPaymentDate')) {
+            this.billForm.removeControl('paymentPlanPaymentDate');
+        }
+        if (this.billForm.contains('paymentPlanStartingBalance')) {
+            this.billForm.removeControl('paymentPlanStartingBalance');
+        }
+        if (this.billForm.contains('paymentPlanLastPaymentDate')) {
+            this.billForm.removeControl('paymentPlanLastPaymentDate');
         }
     };
     BillComponent.prototype.routeListener = function () {
@@ -290,58 +323,88 @@ var BillComponent = (function () {
     ;
     BillComponent.prototype.getBills = function () {
         var _this = this;
+        var that = this;
         this.billService.readBills(this.billType).subscribe(function (data) {
             _this.bills = new __WEBPACK_IMPORTED_MODULE_8__models_bill_list_model__["a" /* BillList */](_this.billType, data);
             _this.configureBillType();
+            that.onBillsChange();
         }, function (error) {
             console.log("failure");
             console.log(error);
         });
     };
-    BillComponent.prototype.onNewEditClicked = function () {
+    BillComponent.prototype.newEditButtonClicked = function () {
         this.isNew = !this.isNew;
         this.billForm.reset();
-        if (!this.isNew) {
-            this.onBillsChange();
+        if (this.isNew) {
+            this.newEditButtonLabel = 'Edit';
+        }
+        else {
+            this.newEditButtonLabel = 'New';
         }
     };
     BillComponent.prototype.onSubmit = function () {
         var savingBill = this.billForm.value;
-        if (!this.isNew) {
-            savingBill.id = this.bills.getSingleBill(savingBill.name).id;
-            savingBill.name = this.bills.getSingleBill(savingBill.name).name;
-        }
+        var tempId = this.bill.id;
         this.bill.updateBill(savingBill);
         if (this.isNew) {
-            this.billService.createBill(this.billType, this.bill).subscribe(function (data) { return console.log(data); }, function (error) { return console.error(error); });
+            var that_1 = this;
+            this.bill.id = null;
+            this.billService.createBill(this.billType, this.bill).subscribe(function (data) {
+                that_1.id = data.id;
+                that_1.newEditButtonClicked();
+                that_1.getBills();
+            }, function (error) { return console.error(error); });
         }
         else if (!this.isNew) {
+            this.bill.id = tempId;
             this.billService.updateBill(this.billType, this.bill).subscribe(function (data) { return console.log(data); }, function (error) { return console.error(error); });
-            console.log(this.bill);
         }
         // this.bill.updateBill(this.billForm.value);
     };
     BillComponent.prototype.onBillsChange = function () {
-        var id = this.billForm.value.name || 0;
-        this.bill = this.bills.getSingleBill(id);
-        this.billForm.controls['description'].patchValue(this.bill.description);
-        this.billForm.controls['paymentAmount'].patchValue(this.bill.paymentAmount);
-        if (this.billType === 'monthly-bill') {
-            this.billForm.controls['paymentDate'].patchValue(this.bill.paymentDate);
-        }
-        if (this.billType === 'yearly-bill') {
-            this.billForm.controls['paymentDay'].patchValue(this.bill.paymentDay);
-            this.billForm.controls['paymentMonth'].patchValue(this.bill.paymentMonth);
-        }
-        if (this.billType === 'one-time-bill') {
-            this.billForm.controls['oneTimePaymentDate'].patchValue(this.bill.oneTimePaymentDate);
-        }
-        if (this.billType === 'interest-baring-debt') {
-            this.billForm.controls['interestBaringPaymentDate'].patchValue(this.bill.paymentDate);
-            this.billForm.controls['startingBalance'].patchValue(this.bill.startingBalance);
-            this.billForm.controls['apr'].patchValue(this.bill.apr);
+        var billInfo = this.id || this.billForm.value.billInfo || 0;
+        this.bill = this.bills.getSingleBill(billInfo);
+        var bi = this.bills.getBillOptions(billInfo);
+        this.billForm.controls['billInfo'].patchValue(this.bills.getBillOptions(billInfo));
+        if (this.billForm.value.billInfo !== null) {
+            this.billForm.controls['name'].patchValue(this.bill.name);
+            this.billForm.controls['description'].patchValue(this.bill.description);
+            this.billForm.controls['paymentAmount'].patchValue(this.bill.paymentAmount);
+            if (this.billType === 'monthly-bill') {
+                this.billForm.controls['monthlyPaymentDate'].patchValue(this.bill.monthlyPaymentDate);
+            }
+            if (this.billType === 'one-time-bill') {
+                this.billForm.controls['oneTimePaymentDate'].patchValue(this.bill.oneTimePaymentDate);
+            }
+            if (this.billType === 'yearly-bill') {
+                this.billForm.controls['yearlyPaymentMonth'].patchValue(this.bill.yearlyPaymentMonth);
+                this.billForm.controls['yearlyPaymentDay'].patchValue(this.bill.yearlyPaymentDay);
+            }
+            if (this.billType === 'no-interest-debt') {
+                this.billForm.controls['noInterestPaymentDate'].patchValue(this.bill.noInterestPaymentDate);
+                this.billForm.controls['noInterestStartingBalance'].patchValue(this.bill.noInterestStartingBalance);
+            }
+            if (this.billType === 'interest-baring-debt') {
+                this.billForm.controls['interestBaringPaymentDate'].patchValue(this.bill.interestBaringPaymentDate);
+                this.billForm.controls['interestBaringStartingBalance'].patchValue(this.bill.interestBaringStartingBalance);
+                this.billForm.controls['interestBaringAPR'].patchValue(this.bill.interestBaringAPR);
+            }
+            if (this.billType === 'payment-plan') {
+                this.billForm.controls['paymentPlanPaymentDate'].patchValue(this.bill.paymentPlanPaymentDate);
+                this.billForm.controls['paymentPlanStartingBalance'].patchValue(this.bill.paymentPlanStartingBalance);
+                this.billForm.controls['paymentPlanLastPaymentDate'].patchValue(this.bill.paymentPlanLastPaymentDate);
+            }
         }
         this.billForm.markAsPristine();
+    };
+    BillComponent.prototype.deleteBill = function () {
+        var _this = this;
+        this.billService.deleteBill(this.billType, this.bill.id).subscribe(function (data) {
+            _this.getBills();
+            _this.billForm.reset();
+            console.log("This has been deleted");
+        }, function (error) { return console.error(error); });
     };
     return BillComponent;
 }());
@@ -404,22 +467,33 @@ var BillService = (function () {
     BillService.prototype.updateBill = function (billType, bill) {
         var body = this.getBody(billType, bill);
         var headers = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
-        return this.http.patch(this.apiUrl + '/update/' + billType, body, { headers: headers })
+        return this.http.put(this.apiUrl + '/update/' + billType, body, { headers: headers })
             .map(function (response) { return response.json(); })
+            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["Observable"].throw(error.json()); });
+    };
+    BillService.prototype.deleteBill = function (billType, id) {
+        return this.http.delete(this.apiUrl + '/delete/' + billType + "/" + id)
             .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["Observable"].throw(error.json()); });
     };
     BillService.prototype.getBody = function (billType, bill) {
         var body;
+        console.log(billType);
         if (billType == 'monthly-bill') {
             body = JSON.stringify(bill.getBill());
         }
-        else if (billType == 'yearly-bill') {
+        else if (billType === 'yearly-bill') {
             body = JSON.stringify(bill.getBill());
         }
-        else if (billType == 'one-time-bill') {
+        else if (billType === 'one-time-bill') {
             body = JSON.stringify(bill.getBill());
         }
-        else if (billType == 'interest-baring-debt') {
+        else if (billType === 'interest-baring-debt') {
+            body = JSON.stringify(bill.getBill());
+        }
+        else if (billType === 'no-interest-debt') {
+            body = JSON.stringify(bill.getBill());
+        }
+        else if (billType === 'payment-plan') {
             body = JSON.stringify(bill.getBill());
         }
         return body;
@@ -445,7 +519,9 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__one_time_bill_model__ = __webpack_require__("../../../../../src/app/bills/models/one-time-bill.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interest_baring_debt_model__ = __webpack_require__("../../../../../src/app/bills/models/interest-baring-debt.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__no_interest_debt__ = __webpack_require__("../../../../../src/app/bills/models/no-interest-debt.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__payment_plan_model__ = __webpack_require__("../../../../../src/app/bills/models/payment-plan.model.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BillList; });
+
 
 
 
@@ -459,29 +535,32 @@ var BillList = (function () {
         this.billType = billType;
         this.billEntry = billEntry;
         this.bills = [];
-        this.billOptions = [];
+        this.billOptions = [{ label: 'Please select bill', value: null }];
         this.generateBillsArray(billType, billEntry);
     }
     BillList.prototype.generateBillsArray = function (billType, billEntry) {
         for (var bill in billEntry) {
             var tempBill = void 0;
             if (billType === 'monthly-bill') {
-                tempBill = new __WEBPACK_IMPORTED_MODULE_0__monthly_bill_model__["a" /* MonthlyBill */](billEntry[bill]._id, billEntry[bill].name, billEntry[bill].description, billEntry[bill].paymentAmount, billEntry[bill].paymentDate);
+                tempBill = new __WEBPACK_IMPORTED_MODULE_0__monthly_bill_model__["a" /* MonthlyBill */](billEntry[bill].id, billEntry[bill].name, billEntry[bill].description, billEntry[bill].paymentAmount, billEntry[bill].paymentDate);
             }
             else if (billType === 'yearly-bill') {
-                tempBill = new __WEBPACK_IMPORTED_MODULE_1__yearly_bill_model__["a" /* YearlyBill */](billEntry[bill]._id, billEntry[bill].name, billEntry[bill].description, billEntry[bill].paymentAmount, billEntry[bill].paymentMonth, billEntry[bill].paymentDay);
+                tempBill = new __WEBPACK_IMPORTED_MODULE_1__yearly_bill_model__["a" /* YearlyBill */](billEntry[bill].id, billEntry[bill].name, billEntry[bill].description, billEntry[bill].paymentAmount, billEntry[bill].paymentMonth, billEntry[bill].paymentDay);
             }
             else if (billType === 'one-time-bill') {
-                tempBill = new __WEBPACK_IMPORTED_MODULE_2__one_time_bill_model__["a" /* OneTimeBill */](billEntry[bill]._id, billEntry[bill].name, billEntry[bill].description, billEntry[bill].paymentAmount, new Date(billEntry[bill].paymentDate));
+                tempBill = new __WEBPACK_IMPORTED_MODULE_2__one_time_bill_model__["a" /* OneTimeBill */](billEntry[bill].id, billEntry[bill].name, billEntry[bill].description, billEntry[bill].paymentAmount, new Date(billEntry[bill].paymentDate));
             }
             else if (billType === 'interest-baring-debt') {
-                tempBill = new __WEBPACK_IMPORTED_MODULE_3__interest_baring_debt_model__["a" /* InterestBaringDebt */](billEntry[bill]._id, billEntry[bill].name, billEntry[bill].description, billEntry[bill].paymentAmount, billEntry[bill].paymentDate, billEntry[bill].startingBalance, billEntry[bill].apr);
+                tempBill = new __WEBPACK_IMPORTED_MODULE_3__interest_baring_debt_model__["a" /* InterestBaringDebt */](billEntry[bill].id, billEntry[bill].name, billEntry[bill].description, billEntry[bill].paymentAmount, billEntry[bill].paymentDate, billEntry[bill].startingBalance, billEntry[bill].apr);
             }
             else if (billType === 'no-interest-debt') {
-                tempBill = new __WEBPACK_IMPORTED_MODULE_4__no_interest_debt__["a" /* NoInterestDebt */](billEntry[bill]._id, billEntry[bill].name, billEntry[bill].description, billEntry[bill].paymentAmount, billEntry[bill].paymentDate, billEntry[bill].startingBalance);
+                tempBill = new __WEBPACK_IMPORTED_MODULE_4__no_interest_debt__["a" /* NoInterestDebt */](billEntry[bill].id, billEntry[bill].name, billEntry[bill].description, billEntry[bill].paymentAmount, billEntry[bill].paymentDate, billEntry[bill].startingBalance);
+            }
+            else if (billType === 'payment-plan') {
+                tempBill = new __WEBPACK_IMPORTED_MODULE_5__payment_plan_model__["a" /* PaymentPlan */](billEntry[bill].id, billEntry[bill].name, billEntry[bill].description, billEntry[bill].paymentAmount, billEntry[bill].paymentDate, billEntry[bill].startingBalance, billEntry[bill].lastPaymentDate);
             }
             this.bills.push(tempBill || null);
-            this.billOptions.push({ label: tempBill.name, value: bill });
+            this.billOptions.push({ label: tempBill.name, value: tempBill.id });
         }
     };
     Object.defineProperty(BillList.prototype, "options", {
@@ -509,11 +588,18 @@ var BillList = (function () {
             if (this.billType === 'no-interest-debt') {
                 bill = new __WEBPACK_IMPORTED_MODULE_4__no_interest_debt__["a" /* NoInterestDebt */]();
             }
+            if (this.billType === 'payment-plan') {
+                bill = new __WEBPACK_IMPORTED_MODULE_5__payment_plan_model__["a" /* PaymentPlan */]();
+            }
         }
         else {
-            bill = this.bills[id];
+            bill = this.bills.find(function (bill) { return bill.id === id; });
         }
         return bill;
+    };
+    BillList.prototype.getBillOptions = function (id) {
+        var bill = this.bills.find(function (bill) { return bill.id === id; });
+        return { label: bill.name, value: bill.id };
     };
     return BillList;
 }());
@@ -636,54 +722,54 @@ var __extends = (this && this.__extends) || (function () {
  */
 var InterestBaringDebt = (function (_super) {
     __extends(InterestBaringDebt, _super);
-    function InterestBaringDebt(id, name, description, paymentAmount, paymentDate, startingBalance, apr) {
+    function InterestBaringDebt(id, name, description, paymentAmount, interestBaringPaymentDate, interestBaringStartingBalance, interestBaringAPR) {
         var _this = _super.call(this, id, name, description, paymentAmount, 'interest-baring-debt') || this;
-        _this._paymentDate = paymentAmount;
-        _this._startingBalance = startingBalance;
-        _this._apr = apr;
+        _this._interestBaringPaymentDate = interestBaringPaymentDate;
+        _this._interestBaringStartingBalance = interestBaringStartingBalance;
+        _this._interestBaringAPR = interestBaringAPR;
         return _this;
     }
-    Object.defineProperty(InterestBaringDebt.prototype, "paymentDate", {
+    Object.defineProperty(InterestBaringDebt.prototype, "interestBaringPaymentDate", {
         get: function () {
-            return this._paymentDate;
+            return this._interestBaringPaymentDate;
         },
         set: function (value) {
-            this._paymentDate = value;
+            this._interestBaringPaymentDate = value;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(InterestBaringDebt.prototype, "startingBalance", {
+    Object.defineProperty(InterestBaringDebt.prototype, "interestBaringStartingBalance", {
         get: function () {
-            return this._startingBalance;
+            return this._interestBaringStartingBalance;
         },
         set: function (value) {
-            this._startingBalance = value;
+            this._interestBaringStartingBalance = value;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(InterestBaringDebt.prototype, "apr", {
+    Object.defineProperty(InterestBaringDebt.prototype, "interestBaringAPR", {
         get: function () {
-            return this._apr;
+            return this._interestBaringAPR;
         },
         set: function (value) {
-            this._apr = value;
+            this._interestBaringAPR = value;
         },
         enumerable: true,
         configurable: true
     });
     InterestBaringDebt.prototype.updateBill = function (ibd) {
         _super.prototype.updateBill.call(this, ibd);
-        this.paymentDate = ibd.paymentDate;
-        this.startingBalance = ibd.startingBalance;
-        this.apr = ibd.apr;
+        this.interestBaringPaymentDate = ibd.interestBaringPaymentDate;
+        this.interestBaringStartingBalance = ibd.interestBaringStartingBalance;
+        this.interestBaringAPR = ibd.interestBaringAPR;
     };
     InterestBaringDebt.prototype.getBill = function () {
         var interestBaringDebt = _super.prototype.getBill.call(this);
-        interestBaringDebt['paymentDate'] = this.paymentDate;
-        interestBaringDebt['startingBalance'] = this.startingBalance;
-        interestBaringDebt['apr'] = this.apr;
+        interestBaringDebt['paymentDate'] = this.interestBaringPaymentDate;
+        interestBaringDebt['startingBalance'] = this.interestBaringStartingBalance;
+        interestBaringDebt['apr'] = this.interestBaringAPR;
         return interestBaringDebt;
     };
     return InterestBaringDebt;
@@ -712,28 +798,28 @@ var __extends = (this && this.__extends) || (function () {
 
 var MonthlyBill = (function (_super) {
     __extends(MonthlyBill, _super);
-    function MonthlyBill(id, name, description, paymentAmount, paymentDate) {
+    function MonthlyBill(id, name, description, paymentAmount, monthlyPaymentDate) {
         var _this = _super.call(this, id, name, description, paymentAmount, 'monthly-bill') || this;
-        _this._paymentDate = paymentDate || null;
+        _this._monthlyPaymentDate = monthlyPaymentDate || null;
         return _this;
     }
-    Object.defineProperty(MonthlyBill.prototype, "paymentDate", {
+    Object.defineProperty(MonthlyBill.prototype, "monthlyPaymentDate", {
         get: function () {
-            return this._paymentDate;
+            return this._monthlyPaymentDate;
         },
-        set: function (thePaymentDate) {
-            this._paymentDate = thePaymentDate;
+        set: function (value) {
+            this._monthlyPaymentDate = value;
         },
         enumerable: true,
         configurable: true
     });
     MonthlyBill.prototype.updateBill = function (mb) {
         _super.prototype.updateBill.call(this, mb);
-        this.paymentDate = mb.paymentDate;
+        this.monthlyPaymentDate = mb.monthlyPaymentDate;
     };
     MonthlyBill.prototype.getBill = function () {
         var monthlyBill = _super.prototype.getBill.call(this);
-        monthlyBill['paymentDate'] = this.paymentDate;
+        monthlyBill['paymentDate'] = this.monthlyPaymentDate;
         return monthlyBill;
     };
     return MonthlyBill;
@@ -765,41 +851,41 @@ var __extends = (this && this.__extends) || (function () {
  */
 var NoInterestDebt = (function (_super) {
     __extends(NoInterestDebt, _super);
-    function NoInterestDebt(id, name, description, paymentAmount, paymentDate, startingBalance) {
+    function NoInterestDebt(id, name, description, paymentAmount, noInterestPaymentDate, noInterestStartingBalance) {
         var _this = _super.call(this, id, name, description, paymentAmount, 'interest-baring-debt') || this;
-        _this._paymentDate = paymentAmount;
-        _this._startingBalance = startingBalance;
+        _this._noInterestPaymentDate = noInterestPaymentDate;
+        _this._noInterestStartingBalance = noInterestStartingBalance;
         return _this;
     }
-    Object.defineProperty(NoInterestDebt.prototype, "paymentDate", {
+    Object.defineProperty(NoInterestDebt.prototype, "noInterestPaymentDate", {
         get: function () {
-            return this._paymentDate;
+            return this._noInterestPaymentDate;
         },
         set: function (value) {
-            this._paymentDate = value;
+            this._noInterestPaymentDate = value;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(NoInterestDebt.prototype, "startingBalance", {
+    Object.defineProperty(NoInterestDebt.prototype, "noInterestStartingBalance", {
         get: function () {
-            return this._startingBalance;
+            return this._noInterestStartingBalance;
         },
         set: function (value) {
-            this._startingBalance = value;
+            this._noInterestStartingBalance = value;
         },
         enumerable: true,
         configurable: true
     });
     NoInterestDebt.prototype.updateBill = function (nid) {
         _super.prototype.updateBill.call(this, nid);
-        this.paymentDate = nid.paymentDate;
-        this.startingBalance = nid.startingBalance;
+        this.noInterestPaymentDate = nid.noInterestPaymentDate;
+        this.noInterestStartingBalance = nid.noInterestStartingBalance;
     };
     NoInterestDebt.prototype.getBill = function () {
         var noInterestDebt = _super.prototype.getBill.call(this);
-        noInterestDebt['paymentDate'] = this.paymentDate;
-        noInterestDebt['startingBalance'] = this.startingBalance;
+        noInterestDebt['paymentDate'] = this.noInterestPaymentDate;
+        noInterestDebt['startingBalance'] = this.noInterestStartingBalance;
         return noInterestDebt;
     };
     return NoInterestDebt;
@@ -840,8 +926,8 @@ var OneTimeBill = (function (_super) {
         get: function () {
             return this._oneTimePaymentDate;
         },
-        set: function (theOneTimePaymentDate) {
-            this._oneTimePaymentDate = theOneTimePaymentDate;
+        set: function (value) {
+            this._oneTimePaymentDate = value;
         },
         enumerable: true,
         configurable: true
@@ -859,6 +945,82 @@ var OneTimeBill = (function (_super) {
 }(__WEBPACK_IMPORTED_MODULE_0__bill_model__["a" /* Bill */]));
 
 //# sourceMappingURL=one-time-bill.model.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/bills/models/payment-plan.model.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bill_model__ = __webpack_require__("../../../../../src/app/bills/models/bill.model.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PaymentPlan; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var PaymentPlan = (function (_super) {
+    __extends(PaymentPlan, _super);
+    function PaymentPlan(id, name, description, paymentAmount, paymentPlanPaymentDate, paymentPlanStartingBalance, paymentPlanLastPaymentDate) {
+        var _this = _super.call(this, id, name, description, paymentAmount, 'monthly-bill') || this;
+        _this._paymentPlanPaymentDate = paymentPlanPaymentDate || null;
+        _this._paymentPlanStartingBalance = paymentPlanStartingBalance || null;
+        _this._paymentPlanLastPaymentDate = paymentPlanLastPaymentDate || null;
+        return _this;
+    }
+    Object.defineProperty(PaymentPlan.prototype, "paymentPlanPaymentDate", {
+        get: function () {
+            return this._paymentPlanPaymentDate;
+        },
+        set: function (value) {
+            this._paymentPlanPaymentDate = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(PaymentPlan.prototype, "paymentPlanStartingBalance", {
+        get: function () {
+            return this._paymentPlanStartingBalance;
+        },
+        set: function (value) {
+            this._paymentPlanStartingBalance = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(PaymentPlan.prototype, "paymentPlanLastPaymentDate", {
+        get: function () {
+            return this._paymentPlanLastPaymentDate;
+        },
+        set: function (value) {
+            this._paymentPlanLastPaymentDate = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    PaymentPlan.prototype.updateBill = function (pp) {
+        _super.prototype.updateBill.call(this, pp);
+        this.paymentPlanPaymentDate = pp.paymentPlanPaymentDate;
+        this.paymentPlanStartingBalance = pp.paymentPlanStartingBalance;
+        this.paymentPlanLastPaymentDate = pp.paymentPlanLastPaymentDate;
+    };
+    PaymentPlan.prototype.getBill = function () {
+        var paymentPlan = _super.prototype.getBill.call(this);
+        paymentPlan['paymentDate'] = this.paymentPlanPaymentDate;
+        paymentPlan['startingBalance'] = this.paymentPlanStartingBalance;
+        paymentPlan['lastPaymentDate'] = this.paymentPlanLastPaymentDate;
+        return paymentPlan;
+    };
+    return PaymentPlan;
+}(__WEBPACK_IMPORTED_MODULE_0__bill_model__["a" /* Bill */]));
+
+//# sourceMappingURL=payment-plan.model.js.map
 
 /***/ }),
 
@@ -881,41 +1043,41 @@ var __extends = (this && this.__extends) || (function () {
 
 var YearlyBill = (function (_super) {
     __extends(YearlyBill, _super);
-    function YearlyBill(id, name, description, paymentAmount, paymentDay, paymentMonth) {
+    function YearlyBill(id, name, description, paymentAmount, yearlyPaymentDay, yearlyPaymentMonth) {
         var _this = _super.call(this, id, name, description, paymentAmount, 'yearly-bill') || this;
-        _this._paymentDay = paymentDay || null;
-        _this._paymentMonth = paymentMonth || null;
+        _this._yearlyPaymentDay = yearlyPaymentDay || null;
+        _this._yearlyPaymentMonth = yearlyPaymentMonth || null;
         return _this;
     }
-    Object.defineProperty(YearlyBill.prototype, "paymentDay", {
+    Object.defineProperty(YearlyBill.prototype, "yearlyPaymentDay", {
         get: function () {
-            return this._paymentDay;
+            return this._yearlyPaymentDay;
         },
-        set: function (thePaymentDay) {
-            this._paymentDay = thePaymentDay;
+        set: function (value) {
+            this._yearlyPaymentDay = value;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(YearlyBill.prototype, "paymentMonth", {
+    Object.defineProperty(YearlyBill.prototype, "yearlyPaymentMonth", {
         get: function () {
-            return this._paymentMonth;
+            return this._yearlyPaymentMonth;
         },
-        set: function (thePaymentMonth) {
-            this._paymentMonth = thePaymentMonth;
+        set: function (value) {
+            this._yearlyPaymentMonth = value;
         },
         enumerable: true,
         configurable: true
     });
     YearlyBill.prototype.updateBill = function (yb) {
         _super.prototype.updateBill.call(this, yb);
-        this.paymentDay = yb.paymentDay;
-        this.paymentMonth = yb.paymentMonth;
+        this.yearlyPaymentDay = yb.yearlyPaymentDay;
+        this.yearlyPaymentMonth = yb.yearlyPaymentMonth;
     };
     YearlyBill.prototype.getBill = function () {
         var yearlyBill = _super.prototype.getBill.call(this);
-        yearlyBill['paymentDay'] = this.paymentDay;
-        yearlyBill['paymentMonth'] = this.paymentMonth;
+        yearlyBill['paymentDay'] = this.yearlyPaymentDay;
+        yearlyBill['paymentMonth'] = this.yearlyPaymentMonth;
         return yearlyBill;
     };
     return YearlyBill;
@@ -1035,15 +1197,14 @@ var MenuComponent = (function () {
         this.items = [{
                 label: 'Bills',
                 items: [
-                    { label: 'Interest Baring Debt', routerLink: ['bill', 'interest-baring-debt'] },
                     { label: 'Monthly Bill', routerLink: ['bill', 'monthly-bill'] },
-                    { label: 'No Interest Debt', routerLink: ['bill', 'no-interest-debt'] },
                     { label: 'One Time Bill', routerLink: ['bill', 'one-time-bill'] },
-                    { label: 'Payment Plan', routerLink: ['bill', 'payment-plan-debt'] },
                     { label: 'Yearly Bill', routerLink: ['bill', 'yearly-bill'] },
+                    { label: 'Interest Baring Debt', routerLink: ['bill', 'interest-baring-debt'] },
+                    { label: 'No Interest Debt', routerLink: ['bill', 'no-interest-debt'] },
+                    { label: 'Payment Plan', routerLink: ['bill', 'payment-plan'] },
                 ]
             },
-            { label: 'Daily' }
         ];
     };
     return MenuComponent;
