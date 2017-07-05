@@ -11,12 +11,13 @@ import {BillList} from "./models/bill-list.model";
 import {InterestBaringDebt} from "./models/interest-baring-debt.model";
 import {NoInterestDebt} from "./models/no-interest-debt";
 import {PaymentPlan} from "./models/payment-plan.model";
+import {BillFactoryService} from "./bill-factory.service";
 
 @Component({
   selector: 'budget-bill',
   templateUrl: './bill.component.html',
   styleUrls: ['./bill.component.css'],
-  providers: [BillService]
+  providers: [BillService, BillFactoryService]
 })
 export class BillComponent {
 
@@ -32,7 +33,8 @@ export class BillComponent {
 
   bills: BillList = new BillList();
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private billService: BillService) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder,
+              private billService: BillService, private billFactory: BillFactoryService) {
     this.billType = route.snapshot.params['billType'] || 'monthly-bill';
     this.setupForm();
     this.routeListener();
@@ -168,21 +170,28 @@ export class BillComponent {
     this.isNew = !this.isNew;
     this.billForm.reset();
     if (this.isNew) {
+      this.billForm.addControl('billInfo', new FormControl());
       this.newEditButtonLabel = 'Edit';
     } else {
+      this.billForm.removeControl('billInfo');
       this.newEditButtonLabel = 'New';
     }
   }
 
   onSubmit() {
     let savingBill: any = this.billForm.value;
-    let tempId: string = this.bill.id;
+    let tempId: string  = "";
+    if(typeof this.bill === 'undefined'){
+      console.log(this.billType);
+      this.bill = this.billFactory.getBill(this.billType);
+    }
+    tempId = this.bill.id;
     this.bill.updateBill(savingBill);
-    console.log(this.bill);
+
     if (this.isNew) {
+      console.log("Creating Bill");
       let that = this;
-      this.bill.id = null;
-      this.billService.createBill(this.billType, this.bill).subscribe(
+      this.billService.createBill(this.billType, savingBill).subscribe(
         data => {
           that.id = data.id;
           that.newEditButtonClicked();
@@ -191,7 +200,7 @@ export class BillComponent {
         error => console.error(error)
       );
     } else if (!this.isNew) {
-
+      console.log("Updating Bill");
       this.bill.id = tempId;
       this.billService.updateBill(this.billType, this.bill).subscribe(
         data => console.log(data),
@@ -208,8 +217,8 @@ export class BillComponent {
     this.bill = this.bills.getSingleBill(billInfo);
     let bi = this.bills.getBillOptions(billInfo);
     this.billForm.controls['billInfo'].patchValue(this.bills.getBillOptions(billInfo));
-
-    if (this.billForm.value.billInfo !== null) {
+    console.log(typeof this.bill);
+    if (this.billForm.value.billInfo !== null && typeof this.bill !== 'undefined') {
       this.billForm.controls['name'].patchValue(this.bill.name);
       this.billForm.controls['description'].patchValue(this.bill.description);
       this.billForm.controls['paymentAmount'].patchValue(this.bill.paymentAmount);

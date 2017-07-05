@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -13,7 +14,7 @@ public class InterestBaringPaymentSchedule {
 
     @Id
     private String id;
-    private Calendar date;
+    private LocalDate date;
     private BigDecimal interestOwed;
     private BigDecimal owed;
 
@@ -22,7 +23,7 @@ public class InterestBaringPaymentSchedule {
 
     public InterestBaringPaymentSchedule(){};
 
-    public InterestBaringPaymentSchedule(Calendar date, BigDecimal interestOwed, BigDecimal owed, InterestBaringDebt interestBaringDebt){
+    public InterestBaringPaymentSchedule(LocalDate date, BigDecimal interestOwed, BigDecimal owed, InterestBaringDebt interestBaringDebt){
         this.date = date;
         this.interestOwed = interestOwed;
         this.owed = owed;
@@ -37,11 +38,11 @@ public class InterestBaringPaymentSchedule {
         this.id = id;
     }
 
-    public Calendar getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
