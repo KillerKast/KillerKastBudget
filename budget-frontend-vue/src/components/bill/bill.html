@@ -1,0 +1,83 @@
+<div id="bills">
+  <form>
+    <div class="col-md-8 col-md-offset-2 centered">
+      <br/>
+      <!--type-->
+      <div id="type" class="form-group">
+        <label>Bill Type</label><br>
+        <label>
+          <input type="radio" value="bill" v-model="billType" checked>
+          Bill
+        </label>
+        <label>
+          <input type="radio" value="debt" v-model="billType">
+          Debt
+        </label>
+      </div>
+      <!--name-->
+      <div id="name" class="form-group">
+        <label>Name</label>
+        <div class="input-group" style="padding-left:0px; padding-right:0px;">
+          <span class="input-group-addon btn-primary" @click="changeNewOrEdit">{{newOrEdit}}</span>
+          <select class="form-control" v-if="!isNew" v-model="bill.id">
+            <option v-for="billName in billNames" :value="billName.value">{{billName.name}}</option>
+          </select>
+          <input type="text" class="form-control" v-if="isNew" v-model="bill.name">
+        </div>
+      </div>
+      <!--description-->
+      <div id="description" class="form-group row">
+        <label for="billDescription">Description</label>
+        <textarea id="billDescription" class="form-control" v-model="bill.description"></textarea>
+      </div>
+      <!--payment amount-->
+      <div id="paymentAmount" class="form-group row">
+        <label>Payment Amount</label>
+        <input class="form-control" type="text" v-model="bill.payment.amount">
+      </div>
+      <div id="paymentFrequency" class="row">
+        <label>Payment Frequency</label><br>
+        <span class="col-md-6" style="padding-left:0px;">
+          <select class="form-control" v-model="bill.payment.interval">
+            <option v-for="bpi in billPaymentIntervals" :value="bpi.value">{{bpi.name}}</option>
+          </select>
+        </span>
+        <span class="col-md-6" style="padding-right:0px;">
+          <select class="form-control" v-model="bill.payment.period" v-if="bill.payment.interval !== 'one-time'">
+            <option v-for="bpp in billPaymentPeriods" :value="bpp.value">{{bpp.name}}</option>
+          </select>
+        </span>
+      </div>
+      <br>
+      <div id="paymentDate" class="form-group row">
+        <label>Next Payment Date</label>
+        <input class="form-control" type="date" v-model="bill.payment.date">
+      </div>
+      <div v-if="billType === 'debt'" class="row">
+        <div id="debtCurrentBalance" class="form-group">
+          <label>Current Balance</label>
+          <input class="form-control" type="text" v-model="bill.debt.currentBalance">
+        </div>
+        <div id="debtAnnualPercentageRate">
+          <label>APR</label>
+          <div class="input-group">
+            <span class="input-group-addon"><input type="checkbox" @click="bill.debt.hasAnnualPercentageRate = !bill.debt.hasAnnualPercentageRate"></span>
+            <input class="form-control" :readonly="!bill.debt.hasAnnualPercentageRate" v-model="bill.debt.annualPercentageRate">
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="form-group row">
+        <button class="btn btn-primary btn-lg" @click.prevent="submit" style="margin-left:0px;">
+          Submit
+        </button>
+        <button class="btn btn-warning btn-lg" @click.prevent="submit">
+          Rest
+        </button>
+        <button class="btn btn-danger btn-lg" @click.prevent="submit">
+          Delete
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

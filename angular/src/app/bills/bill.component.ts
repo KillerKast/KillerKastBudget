@@ -182,16 +182,14 @@ export class BillComponent {
     let savingBill: any = this.billForm.value;
     let tempId: string  = "";
     if(typeof this.bill === 'undefined'){
-      console.log(this.billType);
       this.bill = this.billFactory.getBill(this.billType);
     }
     tempId = this.bill.id;
     this.bill.updateBill(savingBill);
 
     if (this.isNew) {
-      console.log("Creating Bill");
       let that = this;
-      this.billService.createBill(this.billType, savingBill).subscribe(
+      this.billService.createBill(this.billType, this.bill).subscribe(
         data => {
           that.id = data.id;
           that.newEditButtonClicked();
@@ -200,7 +198,6 @@ export class BillComponent {
         error => console.error(error)
       );
     } else if (!this.isNew) {
-      console.log("Updating Bill");
       this.bill.id = tempId;
       this.billService.updateBill(this.billType, this.bill).subscribe(
         data => console.log(data),
@@ -212,6 +209,10 @@ export class BillComponent {
   }
 
   onBillsChange() {
+    console.log("ID: ");
+    console.log("________________________");
+    console.log(this.id);
+    console.log("________________________");
     let billInfo = this.id || this.billForm.value.billInfo || 0;
 
     this.bill = this.bills.getSingleBill(billInfo);
